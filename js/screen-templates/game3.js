@@ -3,12 +3,12 @@
  */
 
 import {createDomElement, changeScreen} from '../utils';
-import footerTemplate from "./footer";
+import footerTemplateHtml from "./footer";
 import {statTemplate, addStatsScreenLogic} from "./stats";
-import {buttonBack, goWelcomeScreen} from './button-back';
+import {buttonBackHtml, goWelcomeScreen} from './button-back-html';
 
-const template = `<header class="header">
-    ${buttonBack}
+const templateHtml = `<header class="header">
+    ${buttonBackHtml}
     <div class="game__timer">NN</div>
     <div class="game__lives">
       <img src="img/heart__empty.svg" class="game__heart" alt="Life" width="31" height="27">
@@ -42,14 +42,21 @@ const template = `<header class="header">
       <li class="stats__result stats__result--unknown"></li>
     </ul>
 </section>
-  ${footerTemplate}`;
+  ${footerTemplateHtml}`;
 
-export const game3Template = createDomElement(template);
+const game3Template = createDomElement(templateHtml);
 
-export const addGame3ScreenLogic = () => {
+/**
+ * Функция запускающая логику экрана game3.
+ */
+const addGame3ScreenLogic = () => {
   // обработчик на стрелку назад
   goWelcomeScreen();
 
+  /**
+   * Обработчики:
+   * По клику на любом изображении переходим на следующий экран
+   */
   const formGame = game3Template.querySelector(`.game__content`);
   formGame.addEventListener(`click`, () => {
     changeScreen(statTemplate);
@@ -57,3 +64,5 @@ export const addGame3ScreenLogic = () => {
   });
 
 };
+
+export {game3Template, addGame3ScreenLogic};

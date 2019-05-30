@@ -3,11 +3,11 @@
  */
 
 import {createDomElement} from '../utils';
-import footerTemplate from "./footer";
-import {buttonBack, goWelcomeScreen} from './button-back';
+import footerTemplateHtml from "./footer";
+import {buttonBackHtml, goWelcomeScreen} from './button-back-html';
 
 const template = `<header class="header">
-  ${buttonBack}
+  ${buttonBackHtml}
   </header>
   <section class="result">
     <h2 class="result__title">Победа!</h2>
@@ -109,7 +109,7 @@ const template = `<header class="header">
       </tr>
     </table>
   </section>
-  ${footerTemplate}`;
+  ${footerTemplateHtml}`;
 
 export const statTemplate = createDomElement(template);
 

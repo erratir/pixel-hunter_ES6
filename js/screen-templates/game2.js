@@ -3,12 +3,12 @@
  */
 
 import {createDomElement, changeScreen} from '../utils';
-import footerTemplate from "./footer";
+import footerTemplateHtml from "./footer";
 import {game3Template, addGame3ScreenLogic} from './game3';
-import {buttonBack, goWelcomeScreen} from './button-back';
+import {buttonBackHtml, goWelcomeScreen} from './button-back-html';
 
-const template = `<header class="header">
-    ${buttonBack}
+const templateHtml = `<header class="header">
+    ${buttonBackHtml}
     <div class="game__timer">NN</div>
     <div class="game__lives">
       <img src="img/heart__empty.svg" class="game__heart" alt="Life" width="31" height="27">
@@ -44,14 +44,21 @@ const template = `<header class="header">
       <li class="stats__result stats__result--unknown"></li>
     </ul>
 </section>
-  ${footerTemplate}`;
+  ${footerTemplateHtml}`;
 
-export const game2Template = createDomElement(template);
+const game2Template = createDomElement(templateHtml);
 
-export const addGame2ScreenLogic = () => {
+/**
+ * Функция запускающая логику экрана game2.
+ */
+const addGame2ScreenLogic = () => {
   // обработчик на стрелку назад
   goWelcomeScreen();
 
+  /**
+   * Обработчики:
+   * Если чекнут хотябы 1 радтобатон, то переключаемся на следующий экран
+   */
   const formGame = game2Template.querySelector(`.game__content`);
   formGame.addEventListener(`change`, () => {
     const answerCheckBoxes = document.querySelectorAll(`input:checked`); // выбрать все чекнутые  type="radio"
@@ -60,5 +67,6 @@ export const addGame2ScreenLogic = () => {
       addGame3ScreenLogic();
     }
   });
-
 };
+
+export {game2Template, addGame2ScreenLogic};

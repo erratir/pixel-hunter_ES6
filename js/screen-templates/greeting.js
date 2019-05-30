@@ -3,10 +3,10 @@
  */
 
 import {createDomElement, changeScreen} from '../utils';
-import footerTemplate from './footer';
+import footerTemplateHtml from './footer';
 import {rulesTemplate, addRulesScreenLogic} from './rules';
 
-const template = `<section class="greeting central--blur">
+const templateHtml = `<section class="greeting central--blur">
   <img class="greeting__logo" src="img/logo_ph-big.svg" width="201" height="89" alt="Pixel Hunter">
   <div class="greeting__asterisk asterisk"><span class="visually-hidden">Я просто красивая звёздочка</span>*</div>
   <div class="greeting__challenge">
@@ -25,14 +25,19 @@ const template = `<section class="greeting central--blur">
   <use xlink:href="img/sprite.svg#arrow-right"></use>
   </svg>
   </button>
-</section>${footerTemplate}`;
+</section>${footerTemplateHtml}`;
 
-export const greetingTemplate = createDomElement(template);
+const greetingTemplate = createDomElement(templateHtml);
 
-export const addGreetingScreenLogic = () => {
+/**
+ * Функция запускающая логику экрана greeting.
+ */
+const addGreetingScreenLogic = () => {
   const arrowRight = greetingTemplate.querySelector(`.greeting__continue`);
   arrowRight.addEventListener(`click`, () => {
     changeScreen(rulesTemplate);
     addRulesScreenLogic();
   });
 };
+
+export {greetingTemplate, addGreetingScreenLogic};

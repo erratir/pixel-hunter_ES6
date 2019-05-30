@@ -1,4 +1,4 @@
-const footerTemplate = `<footer class="footer">
+const footerTemplateHtml = `<footer class="footer">
   <a href="https://htmlacademy.ru" class="social-link">
   <span class="visually-hidden">HTML Academy</span>
 <svg class="icon" width="108" height="37" viewBox="0 0 108 37" fill="#000000">
@@ -34,4 +34,4 @@ const footerTemplate = `<footer class="footer">
   </div>
 </footer>`;
 
-export default footerTemplate;
+export default footerTemplateHtml;

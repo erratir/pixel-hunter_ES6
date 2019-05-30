@@ -1,9 +1,9 @@
-// todo fix Circular dependency: js\screen-templates\greeting.js -> js\screen-templates\rules.js -> js\screen-templates\button-back.js -> js\screen-templates\greeting.js
+// todo fix Circular dependency: js\screen-templates\greeting.js -> js\screen-templates\rules.js -> js\screen-templates\button-back-html.js -> js\screen-templates\greeting.js
 
 import {changeScreen} from '../utils';
 import {greetingTemplate, addGreetingScreenLogic} from './greeting';
 
-export const buttonBack = `  <button class="back">
+const buttonBackHtml = `<button class="back">
   <span class="visually-hidden">Вернуться к началу</span>
   <svg class="icon" width="45" height="45" viewBox="0 0 45 45" fill="#000000">
   <use xlink:href="img/sprite.svg#arrow-left"></use>
@@ -13,8 +13,12 @@ export const buttonBack = `  <button class="back">
   </svg>
   </button>`;
 
-// Вернутся на экран приветствия 'greeting'
-export const goWelcomeScreen = () => {
+
+/**
+ * Вернутся на экран приветствия 'greeting'
+ * Ф-я вешает обработчик на лого со стрелкой назад (`.back`)
+ */
+const goWelcomeScreen = () => {
   const arrowBack = document.querySelector(`.back`);
   arrowBack.addEventListener(`click`, () => {
     // todo функция сброса состояний радиобатонов на экранах Game1-3
@@ -22,3 +26,5 @@ export const goWelcomeScreen = () => {
     addGreetingScreenLogic();
   });
 };
+
+export {buttonBackHtml, goWelcomeScreen};

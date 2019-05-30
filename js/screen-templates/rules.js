@@ -3,11 +3,11 @@
  */
 
 import {createDomElement, changeScreen} from '../utils';
-import footerTemplate from './footer';
+import footerTemplateHtml from './footer';
 import {game1Template, addGame1ScreenLogic} from './game1';
-import {buttonBack, goWelcomeScreen} from './button-back';
+import {buttonBackHtml, goWelcomeScreen} from './button-back-html';
 
-const template = `<header class="header">${buttonBack}</header>
+const templateHtml = `<header class="header">${buttonBackHtml}</header>
 <section class="rules">
   <h2 class="rules__title">Правила</h2>
   <ul class="rules__description">
@@ -23,14 +23,23 @@ const template = `<header class="header">${buttonBack}</header>
   <input class="rules__input" type="text" placeholder="Ваше Имя" maxlength="20" minlength="3">
   <button class="rules__button  continue" type="submit" disabled>Go!</button>
   </form>
-</section>${footerTemplate}`;
+</section>${footerTemplateHtml}`;
 
-export const rulesTemplate = createDomElement(template);
+const rulesTemplate = createDomElement(templateHtml);
 
-export const addRulesScreenLogic = () => {
+/**
+ * Функция запускающая логику экрана rules.
+ */
+const addRulesScreenLogic = () => {
   // обработчик на стрелку назад
   goWelcomeScreen();
 
+  /**
+   * Обработчики:
+   * 1) На поле ввода логина (`.rules__input`). Если ввели значение между minlength="3" и maxlength="20", которые задал в html,
+   * то активировать кнопку `Go`, иначе поле ввода логина обвести красной рамкой
+   * 2) На кнопку Go (`.rules__button`)  - переключить на следующий экран
+   */
   const formInput = rulesTemplate.querySelector(`.rules__input`);
   const buttonSubmit = rulesTemplate.querySelector(`.rules__button`);
 
@@ -48,5 +57,6 @@ export const addRulesScreenLogic = () => {
     changeScreen(game1Template);
     addGame1ScreenLogic();
   });
-
 };
+
+export {rulesTemplate, addRulesScreenLogic};
