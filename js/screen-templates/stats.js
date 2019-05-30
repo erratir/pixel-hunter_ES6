@@ -2,7 +2,8 @@
  * Экран <!-- Общая статистика по всем игрокам  -->
  */
 
-import {createDomElement, changeScreen} from '../utils';
+import {createDomElement} from '../utils';
+import footerTemplate from "./footer";
 
 const template = `<header class="header">
     <button class="back">
@@ -114,6 +115,11 @@ const template = `<header class="header">
         <td colspan="5" class="result__total  result__total--final">950</td>
       </tr>
     </table>
-  </section>`;
+  </section>${footerTemplate}`;
 
 export const statTemplate = createDomElement(template);
+
+export const addStatsScreenLogic = () => {
+  // todo обработчик на стрелку назад
+  // goWelcomeScreen();
+};

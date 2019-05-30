@@ -3,6 +3,8 @@
  */
 
 import {createDomElement, changeScreen} from '../utils';
+import footerTemplate from './footer';
+import {game1Template, addGame1ScreenLogic} from './game1';
 
 const template = `<header class="header">
   <button class="back">
@@ -27,9 +29,33 @@ const template = `<header class="header">
   </ul>
   <p class="rules__ready">Готовы?</p>
   <form class="rules__form">
-  <input class="rules__input" type="text" placeholder="Ваше Имя">
+  <input class="rules__input" type="text" placeholder="Ваше Имя" maxlength="20" minlength="3">
   <button class="rules__button  continue" type="submit" disabled>Go!</button>
   </form>
-</section>`;
+</section>${footerTemplate}`;
 
 export const rulesTemplate = createDomElement(template);
+
+export const addRulesScreenLogic = () => {
+  // todo обработчик на стрелку назад
+  // goWelcomeScreen();
+
+  const formInput = rulesTemplate.querySelector(`.rules__input`);
+  const buttonSubmit = rulesTemplate.querySelector(`.rules__button`);
+
+  formInput.addEventListener(`input`, (evt) => {
+    if (formInput.minLength <= evt.target.value.length && evt.target.value.length <= formInput.maxLength) {
+      buttonSubmit.removeAttribute(`disabled`);
+      buttonSubmit.removeAttribute(`style`);
+    } else {
+      buttonSubmit.setAttribute(`disabled`, `disabled`);
+      formInput.style.borderColor = `red`;
+    }
+  });
+
+  buttonSubmit.addEventListener(`click`, () => {
+    changeScreen(game1Template);
+    addGame1ScreenLogic();
+  });
+
+};

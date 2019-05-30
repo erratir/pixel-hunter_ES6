@@ -1,3 +1,5 @@
+const mainNode = document.querySelector(`main.central`);
+
 /**
  * Создает DOM-элемент на основе переданной в виде строки разметки (html кода).
  * Функция принимает на вход строку с разметкой и возвращать DOM-элемент.
@@ -10,5 +12,15 @@ export const createDomElement = (html) => {
   return template;
 };
 
-// todo Ф-я смены экрана
-export const changeScreen = () => {};
+/**
+ * Insert template content into DOM node (<main> by default).
+ * Принимает html шаблон и вставляет содержимое шаблона в узел DOM (по умолчанию тэг <main>)
+ * @param {HTMLElement} element
+ * @param {Object} container
+ */
+export const changeScreen = (element, container = mainNode) => {
+  // let templateContent = template.content;
+  // container.appendChild(templateContent.cloneNode(true));
+  container.innerHTML = ``;
+  container.appendChild(element);
+};

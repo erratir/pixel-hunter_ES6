@@ -3,6 +3,8 @@
  */
 
 import {createDomElement, changeScreen} from '../utils';
+import footerTemplate from "./footer";
+import {game2Template, addGame2ScreenLogic} from './game2';
 
 const template = `<header class="header">
   <button class="back">
@@ -59,6 +61,23 @@ const template = `<header class="header">
   <li class="stats__result stats__result--unknown"></li>
   <li class="stats__result stats__result--unknown"></li>
   </ul>
-</section>`;
+</section>${footerTemplate}`;
 
 export const game1Template = createDomElement(template);
+
+const formGame = game1Template.querySelector(`.game__content`);
+
+export const addGame1ScreenLogic = () => {
+  // todo обработчик на стрелку назад
+  // goWelcomeScreen();
+
+  // обработчик на форму
+  formGame.addEventListener(`change`, () => {
+    const answerCheckBoxes = document.querySelectorAll(`input:checked`); // выбрать все чекнутые  type="radio"
+    if (answerCheckBoxes.length > 1) {
+      changeScreen(game2Template);
+      addGame2ScreenLogic();
+    }
+  });
+
+};

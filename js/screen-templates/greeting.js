@@ -3,6 +3,8 @@
  */
 
 import {createDomElement, changeScreen} from '../utils';
+import footerTemplate from './footer';
+import {rulesTemplate, addRulesScreenLogic} from './rules';
 
 const template = `<section class="greeting central--blur">
   <img class="greeting__logo" src="img/logo_ph-big.svg" width="201" height="89" alt="Pixel Hunter">
@@ -23,6 +25,14 @@ const template = `<section class="greeting central--blur">
   <use xlink:href="img/sprite.svg#arrow-right"></use>
   </svg>
   </button>
-</section>`;
+</section>${footerTemplate}`;
 
 export const greetingTemplate = createDomElement(template);
+
+export const addGreetingScreenLogic = () => {
+  const arrowRight = greetingTemplate.querySelector(`.greeting__continue`);
+  arrowRight.addEventListener(`click`, () => {
+    changeScreen(rulesTemplate);
+    addRulesScreenLogic();
+  });
+};

@@ -3,6 +3,8 @@
  */
 
 import {createDomElement, changeScreen} from '../utils';
+import footerTemplate from "./footer";
+import {statTemplate, addStatsScreenLogic} from "./stats";
 
 const template = `<header class="header">
     <button class="back">
@@ -46,6 +48,18 @@ const template = `<header class="header">
       <li class="stats__result stats__result--fast"></li>
       <li class="stats__result stats__result--unknown"></li>
     </ul>
-</section>`;
+</section>${footerTemplate}`;
 
 export const game3Template = createDomElement(template);
+
+export const addGame3ScreenLogic = () => {
+  // todo обработчик на стрелку назад
+  // goWelcomeScreen();
+
+  const formGame = game3Template.querySelector(`.game__content`);
+  formGame.addEventListener(`click`, () => {
+    changeScreen(statTemplate);
+    addStatsScreenLogic();
+  });
+
+};
