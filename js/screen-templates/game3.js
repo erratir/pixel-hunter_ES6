@@ -5,17 +5,10 @@
 import {createDomElement, changeScreen} from '../utils';
 import footerTemplate from "./footer";
 import {statTemplate, addStatsScreenLogic} from "./stats";
+import {buttonBack, goWelcomeScreen} from './button-back';
 
 const template = `<header class="header">
-    <button class="back">
-      <span class="visually-hidden">Вернуться к началу</span>
-      <svg class="icon" width="45" height="45" viewBox="0 0 45 45" fill="#000000">
-        <use xlink:href="img/sprite.svg#arrow-left"></use>
-      </svg>
-      <svg class="icon" width="101" height="44" viewBox="0 0 101 44" fill="#000000">
-        <use xlink:href="img/sprite.svg#logo-small"></use>
-      </svg>
-    </button>
+    ${buttonBack}
     <div class="game__timer">NN</div>
     <div class="game__lives">
       <img src="img/heart__empty.svg" class="game__heart" alt="Life" width="31" height="27">
@@ -48,13 +41,14 @@ const template = `<header class="header">
       <li class="stats__result stats__result--fast"></li>
       <li class="stats__result stats__result--unknown"></li>
     </ul>
-</section>${footerTemplate}`;
+</section>
+  ${footerTemplate}`;
 
 export const game3Template = createDomElement(template);
 
 export const addGame3ScreenLogic = () => {
-  // todo обработчик на стрелку назад
-  // goWelcomeScreen();
+  // обработчик на стрелку назад
+  goWelcomeScreen();
 
   const formGame = game3Template.querySelector(`.game__content`);
   formGame.addEventListener(`click`, () => {

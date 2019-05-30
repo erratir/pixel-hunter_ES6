@@ -4,17 +4,10 @@
 
 import {createDomElement} from '../utils';
 import footerTemplate from "./footer";
+import {buttonBack, goWelcomeScreen} from './button-back';
 
 const template = `<header class="header">
-    <button class="back">
-      <span class="visually-hidden">Вернуться к началу</span>
-      <svg class="icon" width="45" height="45" viewBox="0 0 45 45" fill="#000000">
-        <use xlink:href="img/sprite.svg#arrow-left"></use>
-      </svg>
-      <svg class="icon" width="101" height="44" viewBox="0 0 101 44" fill="#000000">
-        <use xlink:href="img/sprite.svg#logo-small"></use>
-      </svg>
-    </button>
+  ${buttonBack}
   </header>
   <section class="result">
     <h2 class="result__title">Победа!</h2>
@@ -115,11 +108,12 @@ const template = `<header class="header">
         <td colspan="5" class="result__total  result__total--final">950</td>
       </tr>
     </table>
-  </section>${footerTemplate}`;
+  </section>
+  ${footerTemplate}`;
 
 export const statTemplate = createDomElement(template);
 
 export const addStatsScreenLogic = () => {
-  // todo обработчик на стрелку назад
-  // goWelcomeScreen();
+  // обработчик на стрелку назад
+  goWelcomeScreen();
 };
