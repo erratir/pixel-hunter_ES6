@@ -12,5 +12,5 @@
 
 Репозиторий создан для обучения на интенсивном онлайн‑курсе «[Профессиональный JavaScript, уровень 2](https://htmlacademy.ru/intensive/ecmascript)» от [HTML Academy](https://htmlacademy.ru).
 
-[travis-image]: https://travis-ci.com/
-[travis-url]: https://travis-ci.com/
+[travis-image]: https://travis-ci.org/erratir/pixel-hunter_ES6.svg?branch=master
+[travis-url]: https://travis-ci.org/erratir/pixel-hunter_ES6
