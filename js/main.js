@@ -2,21 +2,31 @@
 
 (function () {
   const mainNode = document.querySelector(`main.central`);
-  // Если шаблоны в html записаны в нужно порядке, можно проще: const screenTemplates = document.querySelectorAll(`template`);
+  // Если шаблоны в html записаны в нужном порядке, можно проще: const screenTemplates = document.querySelectorAll(`template`);
   const screenTemplates = [`greeting`, `rules`, `game-1`, `game-2`, `game-3`, `stats`]
     .map((templateId) => {
       return document.getElementById(`${templateId}`);
     });
 
+  let currentScreen = 0;
 
-  function showScreen(step) {
+  /**
+   * Функция переключает текущий экран на step шагов вперед или -step назад
+   * @param {number} step (например, может передать значения: -1, -2, 1, 2)
+   */
+  function showScreen(step = 0) {
+    currentScreen += step;
+    if (currentScreen > (screenTemplates.length - 1) || currentScreen < 0) {
+      currentScreen -= step;
+      return;
+    }
+    // console.log(screenTemplates[currentScreen].id);
     cleanNode(mainNode);
-    insertTemplateContent(step);
+    insertTemplateContent(currentScreen);
   }
 
-  // отобразить экран 0
-  showScreen(5);
-
+  // отобразить экран 0 - `greeting`
+  showScreen(0);
 
   /**
    * Removes all children of DOM node.
@@ -39,5 +49,18 @@
     let templateContent = screenTemplates[templateId].content;
     container.appendChild(templateContent.cloneNode(true));
   }
+
+  /**
+   * Обработчик на alt+стрелка(влево или вправо). Запускает переключение экранов
+   */
+  document.addEventListener(`keydown`, (evt) => {
+    if (evt.altKey) {
+      if (evt.key === `ArrowRight`) {
+        showScreen(1);
+      } else if (evt.key === `ArrowLeft`) {
+        showScreen(-1);
+      }
+    }
+  });
 
 }());
