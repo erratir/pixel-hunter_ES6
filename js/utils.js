@@ -9,3 +9,6 @@ export const createDomElement = (html) => {
   template.innerHTML = html.trim(); // trim() - удалить пробелы вначале и конце строки
   return template;
 };
+
+// todo Ф-я смены экрана
+export const changeScreen = () => {};
