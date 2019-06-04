@@ -111,7 +111,7 @@ const template = `<header class="header">
   </section>
   ${footerTemplateHtml}`;
 
-export const statTemplate = createDomElement(template);
+export const statTemplate = createDomElement(`div`, template);
 
 export const addStatsScreenLogic = () => {
   // обработчик на стрелку назад

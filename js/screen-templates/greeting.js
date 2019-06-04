@@ -27,7 +27,7 @@ const templateHtml = `<section class="greeting central--blur">
   </button>
 </section>${footerTemplateHtml}`;
 
-const greetingTemplate = createDomElement(templateHtml);
+const greetingTemplate = createDomElement(`div`, templateHtml);
 
 /**
  * Функция запускающая логику экрана greeting.

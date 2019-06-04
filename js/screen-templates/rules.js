@@ -25,7 +25,7 @@ const templateHtml = `<header class="header">${buttonBackHtml}</header>
   </form>
 </section>${footerTemplateHtml}`;
 
-const rulesTemplate = createDomElement(templateHtml);
+const rulesTemplate = createDomElement(`div`, templateHtml);
 
 /**
  * Функция запускающая логику экрана rules.

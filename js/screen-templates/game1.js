@@ -57,7 +57,7 @@ const templateHtml = `<header class="header">
 </section>
 ${footerTemplateHtml}`;
 
-const game1Template = createDomElement(templateHtml);
+const game1Template = createDomElement(`div`, templateHtml);
 
 const formGame = game1Template.querySelector(`.game__content`);
 

@@ -44,7 +44,7 @@ const templateHtml = `<header class="header">
 </section>
   ${footerTemplateHtml}`;
 
-const game3Template = createDomElement(templateHtml);
+const game3Template = createDomElement(`div`, templateHtml);
 
 /**
  * Функция запускающая логику экрана game3.

@@ -10,7 +10,7 @@ const templateHtml = `<section class="intro">
   <p class="intro__motto"><sup>*</sup> Это не фото. Это рисунок маслом нидерландского художника-фотореалиста Tjalf Sparnaay.</p>
 </section>${footerTemplateHtml}`;
 
-const introTemplate = createDomElement(templateHtml);
+const introTemplate = createDomElement(`div`, templateHtml);
 
 /**
  * Функция запускающая логику экрана rules.
