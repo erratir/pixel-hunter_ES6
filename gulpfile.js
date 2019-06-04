@@ -1,5 +1,3 @@
-'use strict';
-
 const del = require(`del`);
 const gulp = require(`gulp`);
 const sass = require(`gulp-sass`);
@@ -14,6 +12,8 @@ const imagemin = require(`gulp-imagemin`);
 const svgstore = require(`gulp-svgstore`);
 const rollup = require(`gulp-better-rollup`);
 const sourcemaps = require(`gulp-sourcemaps`);
+const mocha = require(`gulp-mocha`); // Добавим установленный gulp-mocha плагин
+const commonjs = require(`rollup-plugin-commonjs`); // Добавим плагин для работы с `commonjs` модулями
 
 gulp.task(`style`, () => {
   return gulp.src(`sass/style.scss`).
@@ -106,6 +106,15 @@ gulp.task(`serve`, gulp.series(`assemble`, () => {
 
 gulp.task(`build`, gulp.series(`assemble`, `imagemin`));
 
-gulp.task(`test`, (done) => {
-  done();
+gulp.task(`test`, () => {
+  return gulp
+    .src([`js/**/*.test.js`])
+    .pipe(rollup({
+      plugins: [
+        commonjs() // Сообщает Rollup, что модули можно загружать из node_modules
+      ]}, `cjs`)) // Выходной формат тестов — `CommonJS` модуль
+    .pipe(gulp.dest(`build/test`))
+    .pipe(mocha({
+      reporter: `spec` // Вид в котором я хочу отображать результаты тестирования
+    }));
 });
