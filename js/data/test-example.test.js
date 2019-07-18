@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /**
  * https://www.chaijs.com
  * https://github.com/chaijs/chai
@@ -6,14 +7,14 @@
  *
  */
 
-// import {assert, expect} from 'chai';
+import {assert, expect} from 'chai';
+import chai from 'chai';
+const should = chai.should();
 
-/* eslint-disable no-unused-vars */
-
-const chai = require(`chai`);
-const assert = chai.assert; // Using Assert style
-const expect = chai.expect; // Using Expect style
-const should = chai.should(); // Using Should style
+// const chai = require(`chai`);
+// const assert = chai.assert; // Using Assert style
+// const expect = chai.expect; // Using Expect style
+// const should = chai.should(); // Using Should style
 
 let foo = `bar`;
 let beverages = {tea: [`chai`, `matcha`, `oolong`]};
