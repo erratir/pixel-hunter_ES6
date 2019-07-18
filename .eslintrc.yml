@@ -9,3 +9,13 @@ env:
   mocha: true
 
 extends: 'htmlacademy/es6'
+
+# Nice way to get rid of no-unused-expressions linter error with chai
+#overrides: [
+#    {
+#        files: '*.test.js',
+#        rules: {
+#            "no-unused-expressions": 'off'
+#        }
+#    }
+#]
