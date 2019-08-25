@@ -5,18 +5,10 @@
 import {createDomElement, changeScreen} from '../utils';
 import footerTemplateHtml from "./footer";
 import {game2Template, addGame2ScreenLogic} from './game2';
-import {buttonBackHtml, goWelcomeScreen} from './button-back-html';
+import {goWelcomeScreen} from './button-back-html';
+import {headerTemplate} from "./header";
 
-const templateHtml = `<header class="header">
-  ${buttonBackHtml}
-  <div class="game__timer">NN</div>
-  <div class="game__lives">
-  <img src="img/heart__empty.svg" class="game__heart" alt=" Missed Life" width="31" height="27">
-  <img src="img/heart__full.svg" class="game__heart" alt="Life" width="31" height="27">
-  <img src="img/heart__full.svg" class="game__heart" alt="Life" width="31" height="27">
-  </div>
-  </header>
-  <section class="game">
+const screenTemplate = `<section class="game">
   <p class="game__task">Угадайте для каждого изображения фото или рисунок?</p>
   <form class="game__content">
   <div class="game__option">
@@ -54,10 +46,9 @@ const templateHtml = `<header class="header">
   <li class="stats__result stats__result--unknown"></li>
   <li class="stats__result stats__result--unknown"></li>
   </ul>
-</section>
-${footerTemplateHtml}`;
+</section>`;
 
-const game1Template = createDomElement(`div`, templateHtml);
+const game1Template = createDomElement(`div`, headerTemplate + screenTemplate + footerTemplateHtml); // todo refactor game1DOM?
 
 const formGame = game1Template.querySelector(`.game__content`);
 
