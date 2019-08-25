@@ -1,36 +1,4 @@
-/**
- * object settings rules of the game
- * @type {{levels: number, gameTime: number, warningTime: number, slowTime: number, quickTime: number, lives: number, liveBonus: number, answersPoints: {wrong: number, correct: number, fast: number, slow: number}}}
- */
-const RULES = Object.freeze({
-  levels: 10, // количество уровней (вопросов)
-  gameTime: 30,
-  warningTime: 5,
-  slowTime: 20, // slow answer time
-  quickTime: 10, // fast answer time
-  lives: 3, // Кол-во жизней (кол-во возможных ошибок)
-  liveBonus: 50, // Бонус за каждую сохраненную жизнь
-  answersPoints: { // к-во очков за ответы:
-    wrong: 0, // за неверный ответ
-    correct: 100, // за верный ответ произведенный за Хсек (quickTime >  Хсек < slowTime)
-    fast: 150, // за верный ответ быстрый ответ ( < quickTime сек)
-    slow: 50 // за верный медленный  ответ ( > slowTime сек)
-  }
-});
-
-/**
- * initial game settings
- */
-const INITIAL_GAME = Object.freeze({
-  correctAnswersCount: 0,
-  fastAnswersCount: 0,
-  slowAnswersCount: 0,
-  livesBonus: 0, // Бонус за сохраненные жизни
-  totalResult: {
-    success: false,
-    score: 0,
-  }
-});
+import {INITIAL_STATE, RULES} from "./data";
 
 /**
  * Функция подсчёта очков при окончании игры / Scoring function at the end of the game
@@ -41,8 +9,8 @@ const INITIAL_GAME = Object.freeze({
  */
 export const calculateStatistic = ({lives, answers}) => {
 
-  // скопируем объект INITIAL_GAME
-  const newGame = Object.assign({}, INITIAL_GAME);
+  // скопируем объект INITIAL_STATE
+  const newGame = Object.assign({}, INITIAL_STATE);
 
   /**
    *   Если игрок ответил меньше, чем на 10 вопросов, то игра считается не пройденной и функция должна вернуть -1;
