@@ -7,6 +7,7 @@ import footerTemplateHtml from "./footer";
 import {game2Template, addGame2ScreenLogic} from './game2';
 import {goWelcomeScreen} from './button-back-html';
 import {headerTemplate} from "./header";
+import {INITIAL_STATE} from "../data/data";
 
 const screenTemplate = `<section class="game">
   <p class="game__task">Угадайте для каждого изображения фото или рисунок?</p>
@@ -48,7 +49,7 @@ const screenTemplate = `<section class="game">
   </ul>
 </section>`;
 
-const game1Template = createDomElement(`div`, headerTemplate + screenTemplate + footerTemplateHtml); // todo refactor game1DOM?
+const game1Template = createDomElement(`div`, headerTemplate(INITIAL_STATE) + screenTemplate + footerTemplateHtml); // todo refactor game1DOM?
 
 const formGame = game1Template.querySelector(`.game__content`);
 
