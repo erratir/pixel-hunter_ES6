@@ -97,3 +97,46 @@
     6.6. Неуспешные прохождения игры тоже сохраняются.
     
     6.7. В левом верхнем углу страницы появляется ссылка на приветственный экран. Нажатие на эту ссылку возвращает пользователя на этот экран в соответствии с правилом 4.2.
+
+___
+
+### API 
+> questions:
+ https://intensive-ecmascript-server-btfgudlkpi.now.sh/pixel-hunter/questions
+ 
+Пример ответа сервера:
+```json   
+[
+{
+  "type":"two-of-two",
+  "question":"Угадайте для каждого изображения фото или рисунок?",
+  "answers":[
+    {
+      "image":{
+        "url":"https://k32.kn3.net/5C7060EC5.jpg",
+        "width":468,
+        "height":458
+      },
+      "type":"painting"
+    },
+    {
+      "image":{
+        "url":"http://i.imgur.com/UIHVp0P.jpg",
+        "width":468,
+        "height":458
+      },
+      "type":"photo"
+    }
+  ]
+},
+{...}
+]
+```
+
+> statistic: 
+https://intensive-ecmascript-server-btfgudlkpi.now.sh/pixel-hunter/stats/${username}
+
+Пример ответа сервера:
+```
+..
+```
