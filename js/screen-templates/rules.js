@@ -4,8 +4,8 @@
 
 import {createDomElement, changeScreen} from '../utils';
 import footerTemplateHtml from './footer';
-import {game1Template, addGame1ScreenLogic} from './game1';
 import {buttonBackHtml, goWelcomeScreen} from './button-back-html';
+import {startGame} from "../game";
 
 const templateHtml = `<header class="header">${buttonBackHtml}</header>
 <section class="rules">
@@ -54,8 +54,7 @@ const addRulesScreenLogic = () => {
   });
 
   buttonSubmit.addEventListener(`click`, () => {
-    changeScreen(game1Template);
-    addGame1ScreenLogic();
+    startGame();
   });
 };
 
