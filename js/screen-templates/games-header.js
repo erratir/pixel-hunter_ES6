@@ -1,3 +1,5 @@
+/** HTML шаблон хеадера, на экранах игр*/
+
 import {buttonBackHtml} from "./button-back-html";
 
 const emptyHeartHtml = `<img src="img/heart__empty.svg" class="game__heart" alt=" Missed Life" width="31" height="27">`;

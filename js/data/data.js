@@ -24,6 +24,7 @@ const RULES = Object.freeze({
 const INITIAL_STATE = Object.freeze({
   lives: 1,
   time: 0,
+  countOfGameScreens: 0,
   correctAnswersCount: 0,
   fastAnswersCount: 0,
   slowAnswersCount: 0,
