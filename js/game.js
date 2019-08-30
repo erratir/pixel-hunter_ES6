@@ -2,8 +2,9 @@ import {getGameView} from "./screen-templates/games";
 import {headerTemplate} from "./screen-templates/games-header";
 import footerTemplate from "./screen-templates/footer";
 import {statStringTemplate} from "./screen-templates/games-stat-string";
-import {INITIAL_STATE, GAME_DATA, RULES} from "./data/data";
+import {INITIAL_STATE, GAME_DATA, RULES, ANSWER_TYPE} from "./data/data";
 import {changeScreen, createDomElement} from "./utils";
+import {renderStatScreen} from "./screen-templates/stats";
 
 const gameScreenTemplate = (game) => {
   return `<section class="game">
@@ -29,24 +30,29 @@ function renderGame(state = Object.assign({}, INITIAL_STATE), game = GAME_DATA[2
 }
 
 /**
- * Временная функция.. или todo дописать логику
- * @param {string} msg
+ * Рендерит экран с новой игрой или экран статистики, если пройдены все игры
+ * @param {object} currentGame
+ * @param {object} state
  */
-const renderNextGameScreen = (msg) => {
-  console.log(msg, `и дальше рендерим экран следующей игры`);
+const renderNextGameScreen = (currentGame, state) => {
+  if (state.countOfGameScreens <= RULES.levels) {
+    renderGame(state, GAME_DATA[state.countOfGameScreens]);
+  } else {
+    renderStatScreen(state);
+  }
 };
 
 /**
- * Проверяет правильность ответа пользователя
+ * Проверяет правильность ответа пользователя и пишет результат в state
+ * e.g., state.answers:  [`correct`, `correct`, `wrong`, `fast`, `slow`]
  * @param {object} currentGame
  * @param {object} answers
  * @param {object} state
  */
 const checkAnswers = (currentGame, answers, state) => {
-  //  console.log(answers);
-
   let isCorrectAnswer = false;
 
+  // Проверить результат (в зависимости от типа игры)
   switch (currentGame.type) {
     case `paint-or-photo`:
     case `two-of-two`:
@@ -61,9 +67,14 @@ const checkAnswers = (currentGame, answers, state) => {
       break;
   }
 
-  // todo измеять state и редерить новую игру
-  let msg = isCorrectAnswer ? `Верно!` : `Не верно!`;
-  renderNextGameScreen(msg);
+  // Изменить state в зависимости от корректности ответа юзера
+  if (isCorrectAnswer) {
+    state.answers.push(ANSWER_TYPE.correct);
+  } else {
+    state.answers.push(ANSWER_TYPE.wrong);
+  }
+
+  renderNextGameScreen(currentGame, state);
 };
 
 /**
