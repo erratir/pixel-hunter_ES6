@@ -6,11 +6,11 @@ import {INITIAL_STATE, GAME_DATA, RULES, ANSWER_TYPE} from "./data/data";
 import {changeScreen, createDomElement} from "./utils";
 import {renderStatScreen} from "./screen-templates/stats";
 
-const gameScreenTemplate = (game) => {
+const gameScreenTemplate = (game, state) => {
   return `<section class="game">
     <p class="game__task">${game.question}</p>
     ${getGameView(game)}
-    ${statStringTemplate()}
+    ${statStringTemplate(state)}
   </section>`;
 };
 
@@ -20,10 +20,10 @@ const gameScreenTemplate = (game) => {
  * @param {object} game Параметры игры
  * todo Тестируем вручную - вызывая renderGame с разными типами игры GAME_DATA[1]
  */
-function renderGame(state = Object.assign({}, INITIAL_STATE), game = GAME_DATA[2]) {
-  if (state.countOfGameScreens <= RULES.levels) {
+function renderGame(state = Object.assign({}, INITIAL_STATE), game = GAME_DATA[0]) {
+  if (state.countOfGameScreens < RULES.levels) {
     state.countOfGameScreens += 1;
-    let gameDOM = createDomElement(`div`, headerTemplate(state) + gameScreenTemplate(game) + footerTemplate);
+    let gameDOM = createDomElement(`div`, headerTemplate(state) + gameScreenTemplate(game, state) + footerTemplate);
     changeScreen(gameDOM);
     addBehaviour(game, gameDOM, state);
   }
@@ -35,7 +35,7 @@ function renderGame(state = Object.assign({}, INITIAL_STATE), game = GAME_DATA[2
  * @param {object} state
  */
 const renderNextGameScreen = (currentGame, state) => {
-  if (state.countOfGameScreens <= RULES.levels) {
+  if (state.countOfGameScreens < RULES.levels) {
     renderGame(state, GAME_DATA[state.countOfGameScreens]);
   } else {
     renderStatScreen(state);

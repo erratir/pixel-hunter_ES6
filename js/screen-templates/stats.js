@@ -6,6 +6,7 @@ import {changeScreen, createDomElement} from '../utils';
 import footerTemplateHtml from "./footer";
 import {buttonBackHtml, goWelcomeScreen} from './button-back-html';
 import {RULES} from "../data/data";
+import {statStringTemplate} from "./games-stat-string";
 
 /**
  *  Returns the total result to display on the statistics page
@@ -41,18 +42,7 @@ const getStatView = (state) => {
       <tr>
         <td class="result__number">1.</td>
         <td colspan="2">
-          <ul class="stats">
-            <li class="stats__result stats__result--wrong"></li>
-            <li class="stats__result stats__result--slow"></li>
-            <li class="stats__result stats__result--fast"></li>
-            <li class="stats__result stats__result--correct"></li>
-            <li class="stats__result stats__result--wrong"></li>
-            <li class="stats__result stats__result--unknown"></li>
-            <li class="stats__result stats__result--slow"></li>
-            <li class="stats__result stats__result--unknown"></li>
-            <li class="stats__result stats__result--fast"></li>
-            <li class="stats__result stats__result--unknown"></li>
-          </ul>
+          ${statStringTemplate(state)}
         </td>
         <td class="result__points">× 100</td>
         <td class="result__total">${totalResult.correctAnswersCount * RULES.answersPoints.correct}</td>
@@ -90,18 +80,7 @@ const getStatView = (state) => {
       <tr>
         <td class="result__number">2.</td>
         <td>
-          <ul class="stats">
-            <li class="stats__result stats__result--wrong"></li>
-            <li class="stats__result stats__result--slow"></li>
-            <li class="stats__result stats__result--fast"></li>
-            <li class="stats__result stats__result--correct"></li>
-            <li class="stats__result stats__result--wrong"></li>
-            <li class="stats__result stats__result--unknown"></li>
-            <li class="stats__result stats__result--slow"></li>
-            <li class="stats__result stats__result--wrong"></li>
-            <li class="stats__result stats__result--fast"></li>
-            <li class="stats__result stats__result--wrong"></li>
-          </ul>
+          ${statStringTemplate(state)}
         </td>
         <td class="result__total"></td>
         <td class="result__total  result__total--final">fail</td>
