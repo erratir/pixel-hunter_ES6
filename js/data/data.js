@@ -41,7 +41,7 @@ const INITIAL_STATE = Object.freeze({
    */
   getCountOfAnswers(type) {
     if (type) {
-      return this.answers.map((element) => element === type).length;
+      return this.answers.filter((element) => element === type).length;
     } else {
       return this.answers.length;
     }
