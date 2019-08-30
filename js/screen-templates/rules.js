@@ -2,30 +2,32 @@
  * Экран <!-- Правила игры -->
  */
 
-import {createDomElement, changeScreen} from '../utils';
+import {createDomElement} from '../utils';
 import footerTemplateHtml from './footer';
 import {buttonBackHtml, goWelcomeScreen} from './button-back-html';
 import {renderGame} from "../game";
+import {RULES} from "../data/data";
 
-const templateHtml = `<header class="header">${buttonBackHtml}</header>
+// language=HTML
+const templateHtml = `
 <section class="rules">
-  <h2 class="rules__title">Правила</h2>
-  <ul class="rules__description">
-  <li>Угадай 10 раз для каждого изображения фото
-  <img class="rules__icon" src="img/icon-photo.png" width="32" height="31" alt="Фото"> или рисунок
-  <img class="rules__icon" src="img/icon-paint.png" width="32" height="31" alt="Рисунок"></li>
-  <li>Фотографиями или рисунками могут быть оба изображения.</li>
-  <li>На каждую попытку отводится 30 секунд.</li>
-  <li>Ошибиться можно не более 3 раз.</li>
-  </ul>
-  <p class="rules__ready">Готовы?</p>
-  <form class="rules__form">
-  <input class="rules__input" type="text" placeholder="Ваше Имя" maxlength="20" minlength="3">
-  <button class="rules__button  continue" type="submit" disabled>Go!</button>
-  </form>
-</section>${footerTemplateHtml}`;
+    <h2 class="rules__title">Правила</h2>
+    <ul class="rules__description">
+        <li>Угадай ${RULES.levels} раз для каждого изображения фото
+            <img class="rules__icon" src="img/icon-photo.png" width="32" height="31" alt="Фото"> или рисунок
+            <img class="rules__icon" src="img/icon-paint.png" width="32" height="31" alt="Рисунок"></li>
+        <li>Фотографиями или рисунками могут быть оба изображения.</li>
+        <li>На каждую попытку отводится ${RULES.gameTime} секунд.</li>
+        <li>Ошибиться можно не более ${RULES.lives} раз.</li>
+    </ul>
+    <p class="rules__ready">Готовы?</p>
+    <form class="rules__form">
+        <input class="rules__input" type="text" placeholder="Ваше Имя" maxlength="20" minlength="3">
+        <button class="rules__button  continue" type="submit" disabled>Go!</button>
+    </form>
+</section>`;
 
-const rulesTemplate = createDomElement(`div`, templateHtml);
+const rulesTemplate = createDomElement(`div`, `<header class="header">${buttonBackHtml}</header>` + templateHtml + footerTemplateHtml);
 
 /**
  * Функция запускающая логику экрана rules.
