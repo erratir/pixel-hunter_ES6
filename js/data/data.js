@@ -1,3 +1,10 @@
+const ANSWER_TYPE = {
+  wrong: `wrong`,
+  correct: `correct`,
+  fast: `fast`,
+  slow: `slow`,
+};
+
 /**
  * object settings rules of the game
  * @type {{levels: number, gameTime: number, warningTime: number, slowTime: number, quickTime: number, lives: number, liveBonus: number, answersPoints: {wrong: number, correct: number, fast: number, slow: number}}}
@@ -11,10 +18,10 @@ const RULES = Object.freeze({
   lives: 3, // Кол-во жизней (кол-во возможных ошибок)
   liveBonus: 50, // Бонус за каждую сохраненную жизнь
   answersPoints: { // к-во очков за ответы:
-    wrong: 0, // за неверный ответ
-    correct: 100, // за верный ответ произведенный за Хсек (quickTime >  Хсек < slowTime)
-    fast: 150, // за верный ответ быстрый ответ ( < quickTime сек)
-    slow: 50 // за верный медленный  ответ ( > slowTime сек)
+    [ANSWER_TYPE.wrong]: 0, // за неверный ответ
+    [ANSWER_TYPE.correct]: 100, // за верный ответ произведенный за Хсек (quickTime >  Хсек < slowTime)
+    [ANSWER_TYPE.fast]: 150, // за верный ответ быстрый ответ ( < quickTime сек)
+    [ANSWER_TYPE.slow]: 50 // за верный медленный  ответ ( > slowTime сек)
   }
 });
 
@@ -22,17 +29,23 @@ const RULES = Object.freeze({
  * initial game settings
  */
 const INITIAL_STATE = Object.freeze({
-  lives: 1,
+  lives: 3,
   time: 0,
   countOfGameScreens: 0,
-  correctAnswersCount: 0,
-  fastAnswersCount: 0,
-  slowAnswersCount: 0,
-  livesBonus: 0, // Бонус за сохраненные жизни
-  totalResult: {
-    success: false,
-    score: 0,
-  }
+  answers: [], // ex.: [`correct`, `correct`, `wrong`, `fast`, `slow`]
+  /**
+   * Returns count of answers specified type
+   * If answers type not specified, returns total count of answers
+   * @param {string} type  / ex.: `correct`, `wrong`, `fast`, `slow`
+   * @return {number}
+   */
+  getCountOfAnswers(type) {
+    if (type) {
+      return this.answers.map((element) => element === type).length;
+    } else {
+      return this.answers.length;
+    }
+  },
 });
 
 // https://intensive-ecmascript-server-btfgudlkpi.now.sh/pixel-hunter/questions
@@ -73,4 +86,5 @@ const GAME_DATA = [
   {"type": `paint-or-photo`, "question": `Угадай, фото или рисунок?`, "answers": [{"image": {"url": `https://k43.kn3.net/1C4F7F5D5.jpg`, "width": 705, "height": 455}, "type": `painting`}]},
   {"type": `paint-or-photo`, "question": `Угадай, фото или рисунок?`, "answers": [{"image": {"url": `http://i.imgur.com/Jvzh3pk.jpg`, "width": 705, "height": 455}, "type": `photo`}]}
 ];
-export {INITIAL_STATE, RULES, GAME_DATA};
+
+export {INITIAL_STATE, RULES, GAME_DATA, ANSWER_TYPE};
