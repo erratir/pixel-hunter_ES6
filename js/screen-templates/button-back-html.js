@@ -21,7 +21,6 @@ const buttonBackHtml = `<button class="back">
 const goWelcomeScreen = () => {
   const arrowBack = document.querySelector(`.back`);
   arrowBack.addEventListener(`click`, () => {
-    // todo функция сброса состояний радиобатонов на экранах Game1-3
     changeScreen(greetingTemplate);
     addGreetingScreenLogic();
   });

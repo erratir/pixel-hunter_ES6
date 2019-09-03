@@ -5,6 +5,7 @@ import {statStringTemplate} from "./screen-templates/games-stat-string";
 import {INITIAL_STATE, GAME_DATA, RULES, ANSWER_TYPE} from "./data/data";
 import {changeScreen, createDomElement} from "./utils";
 import {renderStatScreen} from "./screen-templates/stats";
+import {goWelcomeScreen} from "./screen-templates/button-back-html";
 
 const gameScreenTemplate = (game, state) => {
   return `<section class="game">
@@ -25,6 +26,7 @@ function renderGame(state = Object.assign({}, INITIAL_STATE), game = GAME_DATA[0
     state.countOfGameScreens += 1;
     let gameDOM = createDomElement(`div`, headerTemplate(state) + gameScreenTemplate(game, state) + footerTemplate);
     changeScreen(gameDOM);
+    goWelcomeScreen();
     addBehaviour(game, gameDOM, state);
   }
 }
