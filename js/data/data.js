@@ -46,6 +46,10 @@ const INITIAL_STATE = Object.freeze({
       return this.answers.length;
     }
   },
+  totalResult: {
+    score: 0,
+    success: false
+  },
 });
 
 // https://intensive-ecmascript-server-btfgudlkpi.now.sh/pixel-hunter/questions

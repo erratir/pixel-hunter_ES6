@@ -2,45 +2,47 @@ import {INITIAL_STATE, RULES} from "./data";
 
 /**
  * Функция подсчёта очков при окончании игры / Scoring function at the end of the game
- * @param {number} lives - Количество оставшихся жизней
- * @param {array} answers - Массив ответов хранит данные об ответах пользователя на каждый вопрос по порядку.
+ * Returns the total result to display on the statistics page
+ * @param {object} state - состояние игры. Cм. INITIAL_STATE
+ * state.lives {number} - Количество оставшихся жизней
+ * state.answers {array} - Массив ответов хранит данные об ответах пользователя на каждый вопрос по порядку.
  *                          варианты ответов: см - RULES.answersPoints
- * @return {object} newGame - объект со статистикой игры
+ * @return {object} totalResult - объект со статистикой игры
  */
-export const calculateStatistic = ({lives, answers}) => {
+export const calculateStatistic = (state) => {
 
-  // скопируем объект INITIAL_STATE
-  const newGame = Object.assign({}, INITIAL_STATE);
+  let {lives, answers} = state;
+
+  // скопируем объект totalResult (см. INITIAL_STATE)
+  let totalResult = Object.assign({}, INITIAL_STATE.totalResult);
 
   /**
    *   Если игрок ответил меньше, чем на 10 вопросов, то игра считается не пройденной и функция должна вернуть -1;
    *   Жизней может быть 0-3 type@ integer
    */
   if (!Number.isInteger(lives) || !Array.isArray(answers) || answers.length !== RULES.levels || lives < 0 || lives > 3) {
-    newGame.totalResult.score = -1;
-    return newGame;
+    totalResult.score = -1;
+    return totalResult;
   } else {
-    newGame.totalResult.success = true;
+    totalResult.success = true;
   }
 
-  // подсчет кол-ва различных ответов
-  answers.forEach((item) => {
-    if (item === `correct`) {
-      newGame.correctAnswersCount += 1;
-    } else if (item === `fast`) {
-      newGame.fastAnswersCount += 1;
-    } else if (item === `slow`) {
-      newGame.slowAnswersCount += 1;
-    }
-  });
+  // true - false
+  totalResult.sucsses = state.getCountOfAnswers(`wrong`) < RULES.lives;
+  totalResult.title = totalResult.sucsses ? `Победа!` : `Вы проиграли..`;
 
-  newGame.livesBonus = lives * RULES.liveBonus;
+  // подсчет очков
+  totalResult.correctAnswersCount = state.getCountOfAnswers(`correct`);
+  totalResult.fastAnswersCount = state.getCountOfAnswers(`fast`);
+  totalResult.slowAnswersCount = state.getCountOfAnswers(`slow`);
+  totalResult.wrongAnswersCount = state.getCountOfAnswers(`wrong`);
 
-  newGame.totalResult.score =
-    newGame.correctAnswersCount * RULES.answersPoints.correct +
-    newGame.fastAnswersCount * RULES.answersPoints.fast +
-    newGame.slowAnswersCount * RULES.answersPoints.slow +
-    newGame.livesBonus;
 
-  return newGame;
+  totalResult.score =
+    totalResult.correctAnswersCount * RULES.answersPoints.correct +
+    totalResult.fastAnswersCount * RULES.answersPoints.fast +
+    totalResult.slowAnswersCount * RULES.answersPoints.slow +
+    state.lives * RULES.liveBonus;
+
+  return totalResult;
 };

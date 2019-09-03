@@ -7,23 +7,7 @@ import footerTemplateHtml from "./footer";
 import {buttonBackHtml, goWelcomeScreen} from './button-back-html';
 import {RULES} from "../data/data";
 import {statStringTemplate} from "./games-stat-string";
-
-/**
- *  Returns the total result to display on the statistics page
- * @param {object} state
- * @return {object} result
- */
-const resultCalc = (state) => {
-  let result = {};
-  result.sucsses = state.getCountOfAnswers(`wrong`) < RULES.lives;
-  result.title = result.sucsses ? `Победа!` : `Вы проиграли..`;
-  result.correctAnswersCount = state.getCountOfAnswers(`correct`);
-  result.fastAnswersCount = state.getCountOfAnswers(`fast`);
-  result.slowAnswersCount = state.getCountOfAnswers(`slow`);
-  result.wrongAnswersCount = state.getCountOfAnswers(`wrong`);
-  window.console.log(result);
-  return result;
-};
+import {calculateStatistic} from "../data/statistic";
 
 /**
  * Возвращает html шаблон страницы статистики с подставленными результатами игры
@@ -32,7 +16,7 @@ const resultCalc = (state) => {
  * @return {string}
  */
 const getStatView = (state) => {
-  const totalResult = resultCalc(state);
+  const totalResult = calculateStatistic(state);
   // language=HTML
   return `
   <section class="result">
@@ -73,7 +57,7 @@ const getStatView = (state) => {
         </tr>
     ` : ``}      
       <tr>
-        <td colspan="5" class="result__total  result__total--final">950</td>
+        <td colspan="5" class="result__total  result__total--final">${totalResult.score}</td>
       </tr>
     </table>` :
     `<table class="result__table">
