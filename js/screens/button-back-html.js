@@ -1,4 +1,4 @@
-// todo fix Circular dependency: js\screen-templates\greeting.js -> js\screen-templates\rules.js -> js\screen-templates\button-back-html.js -> js\screen-templates\greeting.js
+// todo fix Circular dependency: js\screens\greeting.js -> js\screens\rules.js -> js\screens\button-back-html.js -> js\screens\greeting.js
 
 import {changeScreen} from '../utils';
 import {greetingTemplate, addGreetingScreenLogic} from './greeting';

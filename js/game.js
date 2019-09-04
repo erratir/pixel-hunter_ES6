@@ -1,11 +1,11 @@
-import {getGameView} from "./screen-templates/games";
-import {headerTemplate} from "./screen-templates/games-header";
-import footerTemplate from "./screen-templates/footer";
-import {statStringTemplate} from "./screen-templates/games-stat-string";
+import {getGameView} from "./screens/games";
+import {headerTemplate} from "./screens/games-header";
+import footerTemplate from "./screens/footer";
+import {statStringTemplate} from "./screens/games-stat-string";
 import {INITIAL_STATE, GAME_DATA, RULES, ANSWER_TYPE} from "./data/data";
 import {changeScreen, createDomElement} from "./utils";
-import {renderStatScreen} from "./screen-templates/stats";
-import {goWelcomeScreen} from "./screen-templates/button-back-html";
+import {renderStatScreen} from "./screens/stats";
+import {goWelcomeScreen} from "./screens/button-back-html";
 
 const gameScreenTemplate = (game, state) => {
   return `<section class="game">
