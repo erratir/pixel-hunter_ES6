@@ -1,5 +1,5 @@
 import {assert} from 'chai'; // Using Assert style
-import {calculateStatistic} from './statistic';
+import {calculateStatistic} from './calc-statistic';
 import {INITIAL_STATE} from "./data";
 
 // массив ответов моковые данные

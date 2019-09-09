@@ -1,6 +1,5 @@
-import {changeScreen} from './utils';
-import {introTemplate, addScreenLogic} from './screens/intro';
+import renderIntro from "./screens/intro/intro";
 
-// console.log(introTemplate);
-changeScreen(introTemplate);
-addScreenLogic();
+renderIntro();
+
+

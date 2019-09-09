@@ -6,7 +6,7 @@ export default class AbstractView {
   }
 
   /**
-   * Возвращает строку, содержащую разметку. Должен быть обязательно переопределён в объектах-наследниках
+   * Возвращает строку, содержащую разметку. Должен быть обязательно переопределён в объектах-наследниках.
    */
   get template() {
     throw new Error(`Template is required`);
@@ -28,8 +28,7 @@ export default class AbstractView {
   }
 
   /**
-   * Создает DOM-элемент на основе переданной в виде строки разметки (html кода).
-   * Функция принимает на вход строку с разметкой и возвращать DOM-элемент.
+   * Создает DOM-элемент на основе переданной строки разметки (html кода).
    * @param {string} tagName - `div`, `button`, etc
    * @param {string} html
    * @return {HTMLElement}
@@ -50,16 +49,15 @@ export default class AbstractView {
   }
 
   // show() {
-  //   changeScreen();
+  //   show(this.element);
   // }
 
   /**
    * Добавляет обработчики событий.
    * Метод по умолчанию ничего не делает.
    * Если нужно обработать какое-то событие, то этот метод должен быть переопределён в наследнике с необходимой логикой
-   * @param {HTMLElement} element
    */
-  bind(element) {
+  bind() {
     // bind handlers if required
   }
 
