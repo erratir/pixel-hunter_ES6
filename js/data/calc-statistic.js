@@ -1,4 +1,4 @@
-import {INITIAL_STATE, RULES} from "./data";
+import {AnswerType, INITIAL_STATE, RULES} from "./data";
 
 /**
  * Функция подсчёта очков при окончании игры / Scoring function at the end of the game
@@ -22,9 +22,8 @@ export const calculateStatistic = (state) => {
    */
   if (!Number.isInteger(lives) || !Array.isArray(answers) || answers.length !== RULES.levels || lives < 0 || lives > 3) {
     totalResult.score = -1;
+    totalResult.title = `Вы проиграли.. `;
     return totalResult;
-  } else {
-    totalResult.success = true;
   }
 
   // true - false
@@ -32,10 +31,11 @@ export const calculateStatistic = (state) => {
   totalResult.title = totalResult.sucsses ? `Победа!` : `Вы проиграли..`;
 
   // подсчет очков
-  totalResult.correctAnswersCount = state.getCountOfAnswers(`correct`);
-  totalResult.fastAnswersCount = state.getCountOfAnswers(`fast`);
-  totalResult.slowAnswersCount = state.getCountOfAnswers(`slow`);
-  totalResult.wrongAnswersCount = state.getCountOfAnswers(`wrong`);
+  totalResult.totalAnswersCount = answers.length;
+  totalResult.correctAnswersCount = state.getCountOfAnswers(AnswerType.CORRECT);
+  totalResult.fastAnswersCount = state.getCountOfAnswers(AnswerType.FAST);
+  totalResult.slowAnswersCount = state.getCountOfAnswers(AnswerType.SLOW);
+  totalResult.wrongAnswersCount = state.getCountOfAnswers(AnswerType.WRONG);
 
 
   totalResult.score =

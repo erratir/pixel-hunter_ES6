@@ -7,7 +7,7 @@ import {INITIAL_STATE} from "./data";
 let state = Object.assign({}, INITIAL_STATE);
 
 // let state.answers = [];
-// [`correct`, `wrong`, `fast`, `slow`, `slow`, `slow`, `slow`, `slow`, `slow`, `slow`];
+// [`CORRECT`, `WRONG`, `FAST`, `SLOW`, `SLOW`, `SLOW`, `SLOW`, `SLOW`, `SLOW`, `SLOW`];
 
 
 describe(`-=== Game Statistic ===-`, () => {

@@ -51,7 +51,7 @@ export default class RulesView extends AbstractView {
     });
 
     buttonSubmit.addEventListener(`click`, () => {
-      this.onNextScreen();
+      this.onNextScreen(formInput.value);
     });
   }
 }

@@ -1,5 +1,5 @@
-import renderIntro from "./screens/intro/intro";
+import App from "./app";
 
-renderIntro();
+App.showIntro();
 
 

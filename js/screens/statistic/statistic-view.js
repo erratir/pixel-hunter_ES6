@@ -7,7 +7,6 @@ import StatStringView from "../stat-string-view";
 import {calculateStatistic} from "../../data/calc-statistic";
 import AbstractView from "../../abstract-view";
 
-
 export default class StatisticView extends AbstractView {
   constructor(state) {
     super();
@@ -23,7 +22,7 @@ export default class StatisticView extends AbstractView {
   get template() {
     // language=HTML
     return `<section class="result">
-    <h2 class="result__title">${this._totalResult.title}</h2>
+    <h2 class="result__title">${this._gameState.userName}! ${this._totalResult.title}</h2>
     ${this._totalResult.sucsses ?
     `<table class="result__table">
       <tr>
@@ -32,7 +31,7 @@ export default class StatisticView extends AbstractView {
           ${this._statString.template}
         </td>
         <td class="result__points">× 100</td>
-        <td class="result__total">${this._totalResult.correctAnswersCount * RULES.answersPoints.correct}</td>
+        <td class="result__total">${(this._totalResult.totalAnswersCount - this._totalResult.wrongAnswersCount) * RULES.answersPoints.correct}</td>
       </tr>
     ${this._totalResult.fastAnswersCount > 0 ? `
       <tr>
@@ -40,7 +39,7 @@ export default class StatisticView extends AbstractView {
           <td class="result__extra">Бонус за скорость:</td>
           <td class="result__extra">${this._totalResult.fastAnswersCount}<span class="stats__result stats__result--fast"></span></td>
           <td class="result__points">× 50</td>
-          <td class="result__total">${this._totalResult.fastAnswersCount * RULES.answersPoints.fast}</td>
+          <td class="result__total">${this._totalResult.fastAnswersCount * (RULES.answersPoints.fast - RULES.answersPoints.correct)}</td>
       </tr>`
     : ``}
       <tr>
@@ -56,7 +55,7 @@ export default class StatisticView extends AbstractView {
           <td class="result__extra">Штраф за медлительность:</td>
           <td class="result__extra">${this._totalResult.slowAnswersCount}<span class="stats__result stats__result--slow"></span></td>
           <td class="result__points">× 50</td>
-          <td class="result__total">${this._totalResult.slowAnswersCount * RULES.answersPoints.wrong}</td>
+          <td class="result__total">${this._totalResult.slowAnswersCount * RULES.answersPoints.slow}</td>
         </tr>
     ` : ``}      
       <tr>
@@ -74,6 +73,5 @@ export default class StatisticView extends AbstractView {
       </tr>
     </table>`}
   </section>`;
-
   }
 }

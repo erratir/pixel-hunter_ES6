@@ -16,8 +16,7 @@ export default class HeaderView extends AbstractView {
     this._headerTemplate = ``;
 
     // language=HTML
-    this._buttonBackView = `
-      <button class="back">
+    this._buttonBackView = `<button class="back">
         <span class="visually-hidden">Вернуться к началу</span>
         <svg class="icon" width="45" height="45" viewBox="0 0 45 45" fill="#000000">
           <use xlink:href="img/sprite.svg#arrow-left"></use>
@@ -46,7 +45,6 @@ export default class HeaderView extends AbstractView {
   }
 
   onWelcomeScreen() {
-
   }
 
   bind() {

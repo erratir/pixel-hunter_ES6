@@ -1,16 +1,14 @@
-import {clearScreen, show} from "../../utils/utils";
+import {changeView} from "../../utils/utils";
 import StatisticView from "./statistic-view";
 import FooterView from "../footer-view";
 
-export default (state) => {
+export default class StatScreen {
+  constructor(state) {
+    this.statisticView = new StatisticView(state);
+    this.footerView = new FooterView();
+  }
 
-  clearScreen();
-
-  const statisticView = new StatisticView(state);
-  show(statisticView.element);
-  // todo resetStat();
-
-  const footerView = new FooterView();
-  show(footerView.element);
-
-};
+  show() {
+    changeView(this.statisticView.element, this.footerView.element);
+  }
+}

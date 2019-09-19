@@ -1,19 +1,21 @@
 import GreetingView from "./greeting-view";
-import {clearScreen, show} from "../../utils/utils";
-import renderRules from "../rules/rules";
+import {changeView} from "../../utils/utils";
 import FooterView from "../footer-view";
+import App from "../../app";
 
 
-export default () => {
-  clearScreen();
-  const greetingView = new GreetingView();
-  show(greetingView.element);
+export default class GreetingScreen {
+  constructor() {
+    this.greetingView = new GreetingView();
+    this.footerView = new FooterView();
+    this.greetingView.onNextScreen = GreetingScreen._onNextScreen.bind(this);
+  }
 
-  greetingView.onNextScreen = () => {
-    renderRules();
-  };
+  show() {
+    changeView(this.greetingView.element, this.footerView.element);
+  }
 
-  const footerView = new FooterView();
-  show(footerView.element);
-
-};
+  static _onNextScreen() {
+    App.showRules();
+  }
+}

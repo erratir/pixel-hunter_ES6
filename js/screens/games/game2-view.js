@@ -5,7 +5,7 @@ import AbstractView from "../../abstract-view";
 export default class extends AbstractView {
   constructor(currentGame) {
     super();
-    this._curentGameData = currentGame;
+    this._currentGameData = currentGame;
     this._gameQuestion = currentGame.question;
     // создадим массив url'ов картинок
     this._imageUrls = currentGame.answers.map((element) => {
@@ -29,7 +29,7 @@ export default class extends AbstractView {
       <form class="game__content">${this._templateString}</form></section>`;
   }
 
-  onAnswers() {
+  onAnswer() {
   }
 
   /**
@@ -38,13 +38,17 @@ export default class extends AbstractView {
    * переопределяться снаружи (паттерн «Слушатель»). В коллбэк передается массив ответов e.g., [painting, photo]
    */
   bind() {
-    this._form = this.element.querySelector(`.game__content`);
-    this._form.addEventListener(`change`, () => {
-      this._checkedRadioList = this.element.querySelectorAll(`input:checked`); // выбрать все чекнутые  type="radio"
+    const form = this.element.querySelector(`.game__content`);
+    form.addEventListener(`change`, () => {
+      const checkedRadioList = this.element.querySelectorAll(`input:checked`); // выбрать все чекнутые  type="radio"
 
-      if (this._checkedRadioList.length === this._curentGameData.answers.length) { // если их столько же сколько ответов(картинок) в игре
-        this._answers = Array.from(this._checkedRadioList).map((checkBox) => checkBox.value);
-        this.onAnswers(this._answers);
+      if (checkedRadioList.length === this._currentGameData.answers.length) { // если их столько же сколько ответов(картинок) в игре
+        const answers = Array.from(checkedRadioList).map((checkBox) => checkBox.value);
+
+        // проверяем ответы
+        let isCorrect = answers.every((value, i) => value === this._currentGameData.answers[i].type);
+
+        this.onAnswer(isCorrect);
       }
     });
   }

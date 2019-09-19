@@ -5,14 +5,16 @@ import AbstractView from "../../abstract-view";
 export default class extends AbstractView {
   constructor(currentGame) {
     super();
-    this._curentGameData = currentGame;
+    this._currentGameData = currentGame;
     this._gameQuestion = currentGame.question;
+    this.correctAnswer = `painting`;
     // создадим массив url'ов картинок
     this._imageUrls = currentGame.answers.map((element) => {
       return element.image.url;
     });
   }
 
+  // todo сократить шаблон, отдавая по диву на каждый currentGame.answers?
   get template() {
     return `
       <section class="game">
@@ -31,7 +33,7 @@ export default class extends AbstractView {
       </section>`;
   }
 
-  onAnswers() {
+  onAnswer() {
   }
 
   /**
@@ -40,11 +42,19 @@ export default class extends AbstractView {
    * переопределяться снаружи (паттерн «Слушатель»). В коллбэк передается массив ответов e.g., [painting]
    */
   bind() {
-    this._form = this.element.querySelector(`.game__content`);
-    this._form.addEventListener(`click`, (evt) => {
-      this._answers = [];
-      this._answers.push(evt.target.alt);
-      this.onAnswers(this._answers);
+    const form = this.element.querySelector(`.game__content`);
+    form.addEventListener(`click`, (evt) => {
+
+      // проверяем ответ
+      // const answerStr = evt.target.alt; // e.g. "Option 2"
+      // const userAnswerNumber = parseInt(answerStr.slice(-1), 10); // "Option 2".slice(-1) вернет "2"
+      // let isCorrect = this._currentGameData.answers[userAnswerNumber - 1].type === this.correctAnswer; // массив с нуля game.answers[0], а ответы с еденицы "Option 1", "Option 2"
+
+      // проверяем ответ
+      const answer = this._currentGameData.answers.find((element) => element.image.url === evt.target.src);
+      const isCorrect = answer.type === this.correctAnswer;
+
+      this.onAnswer(isCorrect);
     });
   }
 }

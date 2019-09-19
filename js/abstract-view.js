@@ -1,3 +1,5 @@
+import {createDomElement} from "./utils/utils";
+
 export default class AbstractView {
   constructor() {
     if (new.target === AbstractView) {
@@ -5,9 +7,7 @@ export default class AbstractView {
     }
   }
 
-  /**
-   * Возвращает строку, содержащую разметку. Должен быть обязательно переопределён в объектах-наследниках.
-   */
+  /** Возвращает строку, содержащую разметку. Должен быть обязательно переопределён в объектах-наследниках */
   get template() {
     throw new Error(`Template is required`);
   }
@@ -27,16 +27,8 @@ export default class AbstractView {
     return this._element;
   }
 
-  /**
-   * Создает DOM-элемент на основе переданной строки разметки (html кода).
-   * @param {string} tagName - `div`, `button`, etc
-   * @param {string} html
-   * @return {HTMLElement}
-   */
-  _createDomElement(tagName, html) {
-    const template = document.createElement(tagName);
-    template.innerHTML = html.trim(); // trim() - удалить пробелы вначале и конце строки
-    return template;
+  static createDomElement(html) {
+    return createDomElement(`div`, html).firstChild; // возвращаем без обертки `div`
   }
 
   /**
@@ -45,7 +37,7 @@ export default class AbstractView {
    * @private
    */
   _render() {
-    return this._createDomElement(`div`, this.template);
+    return AbstractView.createDomElement(this.template);
   }
 
   // show() {

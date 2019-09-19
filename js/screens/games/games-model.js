@@ -1,97 +1,87 @@
-import Game1View from "./game1-view";
-import Game2View from "./game2-view";
-import Game3View from "./game3-view";
-import {ANSWER_TYPE, GAME_DATA, INITIAL_STATE, RULES} from "../../data/data";
-import {clearScreen, show} from "../../utils/utils";
-import renderStatScreen from "../statistic/statistic";
-import HeaderView from "../header-view";
-import FooterView from "../footer-view";
-import renderGreeting from "../greeting/greeting";
-import StatStringView from "../stat-string-view";
+import {INITIAL_STATE} from "../../data/data";
 
+// MODEL
+export default class GameModel {
+  constructor(userName) {
+    this.restart();
+    this._state.userName = userName;
+  }
 
-function getGameView(game) {
-  switch (game.type) {
-    case `paint-or-photo`:
-      return new Game1View(game);
-    case `two-of-two`:
-      return new Game2View(game);
-    case `one-of-three`:
-      return new Game3View(game);
-    default:
-      return new Error(`Не удалось, сформировать шаблон игры.`);
+  get state() {
+    return Object.freeze(this._state);
+  }
+
+  get userName() {
+    return this._state.userName;
+  }
+
+  nextLevel() {
+    this._state = changeLevel(this._state, this._state.currentLevel + 1);
+  }
+
+  addAnswer(answerType) {
+    //  коолекционирует результаты ответа пользователя [CORRECT, SLOW, etc]
+    this._state.answers.push(answerType);
+  }
+
+  die() {
+    this._state = die(this.state);
+  }
+
+  restart() {
+    // обнулить данные модели
+    this._state = Object.assign({}, INITIAL_STATE);
+    // Object.assign, не выполняят глубокого копирования (вложенные объекты передаются ссылкой).
+    // JSON.parse(JSON.stringify(INITIAL_STATE)) тоже не сработает, так как в объекте есть метод
+    // Поэтому либо написать метод для глубокого копирования, либо обнулить влоб:
+    this._state.answers = [];
+    this._state.totalResult.score = 0;
+    this._state.totalResult.success = false;
+  }
+
+  isDead() {
+    return this._state.lives <= 0;
+  }
+
+  tick() {
+    this._state = tick(this._state);
+  }
+
+  resetTime() {
+    this._state = restartTime(this._state);
   }
 }
 
-
-function renderGame(state = Object.assign({}, INITIAL_STATE), game = GAME_DATA[0]) {
-  clearScreen();
-  state.countOfGameScreens++;
-
-  /**
-   * Проверить результат (в зависимости от типа игры)
-   * @param {array} answers Массив ответов e.g., [painting, photo]
-   * @return {boolean}
-   */
-  function isCorrectAnswers(answers) {
-    let isCorrect = false;
-
-    switch (game.type) {
-      case `paint-or-photo`:
-      case `two-of-two`:
-        isCorrect = answers.every((answer, i) => {
-          return answer === game.answers[i].type;
-        });
-        break;
-      case `one-of-three`:
-        // Найдите рисунок среди изображений
-        let answerStr = answers[0]; // e.g. "Option 2"
-        let userAnswerNumber = parseInt(answerStr.slice(-1), 10); // "Option 2".slice(-1) вернет "2"
-        isCorrect = game.answers[userAnswerNumber - 1].type === `painting`; // массив с нуля game.answers[0], а ответы с еденицы "Option 1", "Option 2"
-        break;
-    }
-    return isCorrect;
+const changeLevel = (state, nextLevel) => {
+  if (typeof nextLevel !== `number`) {
+    throw new Error(`The level must be a number`);
+  }
+  if (nextLevel < 0) {
+    throw new Error(`Level should not be negative value`);
   }
 
-  function renderNextScreen() {
-    // console.log(state.lives);
-    if (state.countOfGameScreens < RULES.levels && state.lives > -1) {
-      renderGame(state, GAME_DATA[state.countOfGameScreens]);
-    } else {
-      renderStatScreen(state);
-    }
-  }
+  return Object.assign({}, state, {
+    currentLevel: nextLevel
+  });
+};
 
-  // header
-  const headerView = new HeaderView(state);
-  show(headerView.element);
-  headerView.onWelcomeScreen = () => {
-    renderGreeting();
-  };
+const tick = (state) => {
+  state = Object.assign({}, state, {
+    time: state.time - 1
+  });
+  return state;
+};
 
-  // game
-  const currentGameView = getGameView(game);
-  show(currentGameView.element);
-  currentGameView.onAnswers = (answers) => {
-    // Изменить state в зависимости от корректности ответа юзера
-    if (isCorrectAnswers(answers)) {
-      state.answers.push(ANSWER_TYPE.correct);
-    } else {
-      state.answers.push(ANSWER_TYPE.wrong);
-      --state.lives;
-    }
-    renderNextScreen();
-  };
+const die = (state) => {
+  state = Object.assign({}, state, {
+    lives: state.lives - 1
+  });
+  return state;
+};
 
-  // stat_string
-  const statStringView = new StatStringView(state);
-  show(statStringView.element, document.querySelector(`.game`));
-
-  // footer
-  const footerView = new FooterView();
-  show(footerView.element);
-
-}
-
-
-export {renderGame};
+const restartTime = (state) => {
+  state = Object.assign({}, state, {
+    time: INITIAL_STATE.time + 1 // + 1 чтобы после 1го тика на экране отобразилось INITIAL_STATE.time
+  });
+  return state;
+};

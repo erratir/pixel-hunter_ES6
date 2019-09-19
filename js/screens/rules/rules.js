@@ -1,29 +1,23 @@
-import {renderGame} from "../games/games-model";
 import RulesView from "./rules-view";
-
-import {clearScreen, show} from "../../utils/utils";
-import renderGreeting from "../greeting/greeting";
+import {changeView} from "../../utils/utils";
 import HeaderView from "../header-view";
 import FooterView from "../footer-view";
+import App from "../../app";
 
-export default () => {
-  clearScreen();
+export default class RulesScreen {
+  constructor() {
+    this.rulesView = new RulesView();
+    this.headerView = new HeaderView();
+    this.footerView = new FooterView();
+    this.rulesView.onNextScreen = RulesScreen._onNextScreen.bind(this);
+  }
 
-  const headerView = new HeaderView();
-  show(headerView.element);
+  show() {
+    changeView(this.headerView.element, this.rulesView.element, this.footerView.element);
+  }
 
-  headerView.onWelcomeScreen = () => {
-    renderGreeting();
-  };
+  static _onNextScreen(userName) {
+    App.showGame(userName);
+  }
 
-  const rulesView = new RulesView();
-  show(rulesView.element);
-
-  rulesView.onNextScreen = () => {
-    renderGame();
-  };
-
-  const footerView = new FooterView();
-  show(footerView.element);
-
-};
+}

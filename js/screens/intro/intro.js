@@ -1,20 +1,18 @@
-import showGreeting from "../greeting/greeting";
-import {clearScreen, show} from "../../utils/utils";
+import {changeView} from "../../utils/utils";
 import IntroView from "./intro-view";
-import FooterView from '../footer-view';
+import App from "../../app";
 
-export default () => {
+export default class IntroScreen {
+  constructor() {
+    this.introView = new IntroView();
+    this.introView.onNextScreen = IntroScreen._onNextScreen.bind(this);
+  }
 
-  clearScreen();
+  show() {
+    changeView(this.introView.element);
+  }
 
-  const introView = new IntroView();
-  show(introView.element);
-
-  introView.onNextScreen = () => {
-    showGreeting();
-  };
-
-  const footerView = new FooterView();
-  show(footerView.element);
-
-};
+  static _onNextScreen() {
+    App.showGreeting();
+  }
+}

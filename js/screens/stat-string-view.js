@@ -12,7 +12,7 @@ export default class StatStringView extends AbstractView {
 
     /**
      * Формируем массив <li> с нужными классами в зависимости от предыдущих ответов
-     * e.g., <li class="stats__result stats__result--correct"></li>   <li class="stats__result stats__result--unknown"></li>
+     * e.g., <li class="stats__result stats__result--CORRECT"></li>   <li class="stats__result stats__result--unknown"></li>
      */
     for (let i = 0; i < RULES.levels; i++) {
       this._liStrArr.push(this._gameState.answers[i] === undefined ? `<li class="stats__result stats__result--unknown"></li>`
