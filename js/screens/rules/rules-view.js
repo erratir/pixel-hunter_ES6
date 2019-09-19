@@ -2,7 +2,7 @@
  * View экрана "Правила игры"
  */
 
-import {RULES} from "../../data/data";
+import {RULES} from "../../data/settings";
 import AbstractView from "../../abstract-view";
 
 export default class RulesView extends AbstractView {

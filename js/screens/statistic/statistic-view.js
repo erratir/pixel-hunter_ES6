@@ -2,7 +2,7 @@
  * View экрана общей статистики
  */
 
-import {RULES} from "../../data/data";
+import {RULES} from "../../data/settings";
 import StatStringView from "../stat-string-view";
 import {calculateStatistic} from "../../data/calc-statistic";
 import AbstractView from "../../abstract-view";

@@ -1,4 +1,4 @@
-import {AnswerType, INITIAL_STATE, RULES} from "./data";
+import {AnswerType, INITIAL_STATE, RULES} from "./settings";
 
 /**
  * Функция подсчёта очков при окончании игры / Scoring function at the end of the game

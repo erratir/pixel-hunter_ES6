@@ -1,6 +1,6 @@
 import {assert} from 'chai'; // Using Assert style
 import {calculateStatistic} from './calc-statistic';
-import {INITIAL_STATE} from "./data";
+import {INITIAL_STATE} from "./settings";
 
 // массив ответов моковые данные
 

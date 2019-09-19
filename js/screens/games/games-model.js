@@ -1,4 +1,4 @@
-import {INITIAL_STATE} from "../../data/data";
+import {INITIAL_STATE} from "../../data/settings";
 
 // MODEL
 export default class GameModel {

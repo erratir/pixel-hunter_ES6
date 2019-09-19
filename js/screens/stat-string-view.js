@@ -1,5 +1,5 @@
 /** View строки статистики. Показывается внизу на экранах игр и экране общей статистики*/
-import {RULES} from "../data/data";
+import {RULES} from "../data/settings";
 import AbstractView from "../abstract-view";
 
 export default class StatStringView extends AbstractView {

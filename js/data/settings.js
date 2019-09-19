@@ -1,3 +1,5 @@
+const hash = window.location.hash.replace(`#`, ``);
+
 const AnswerType = {
   WRONG: `wrong`,
   CORRECT: `correct`,
@@ -10,6 +12,7 @@ const AnswerType = {
  * @type {Readonly<{quickTime: number, gameTime: number, lives: number, answersPoints: {[p: string]: number}, tickTime: number, slowTime: number, liveBonus: number, warningTime: number, levels: number}>}
  */
 const RULES = Object.freeze({
+  debug: hash.toLowerCase() === `debug`, // to use debug mode add #debug to url, and see console
   levels: 10, // количество уровней (вопросов)
   gameTime: 30,
   tickTime: 1000, // время обновления таймера in ms

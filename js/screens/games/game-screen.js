@@ -6,7 +6,7 @@ import App from "../../app";
 import Game3View from "./game3-view";
 import Game1View from "./game1-view";
 import Game2View from "./game2-view";
-import {AnswerType, RULES} from "../../data/data";
+import {AnswerType, RULES} from "../../data/settings";
 import {changeView} from "../../utils/utils";
 
 
@@ -105,6 +105,7 @@ export default class GameScreen {
     this.gameView = view;
     this.gameNode = this.root.querySelector(`.${this.gameView.element.className}`);
     this._changeStatString();
+    this._debug();
   }
 
   _changeStatString() {
@@ -132,6 +133,15 @@ export default class GameScreen {
     this.stop();
     this.model.restart();
     App.showGreeting();
+  }
+
+  _debug() {
+    if (RULES.debug) {
+      // eslint-disable-next-line no-console
+      console.error(`debag mode ON`);
+      // eslint-disable-next-line no-console
+      this.gameData[this.model.state.currentLevel].answers.map((answer) => console.log(answer.type));
+    }
   }
 
   static getGameView(game) {
