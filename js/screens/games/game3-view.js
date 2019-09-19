@@ -7,7 +7,7 @@ export default class extends AbstractView {
     super();
     this._currentGameData = currentGame;
     this._gameQuestion = currentGame.question;
-    this.correctAnswer = `painting`;
+    this.correctAnswer = this._gameQuestion.includes(`Найдите фото среди изображений`) ? `photo` : `painting`;
     // создадим массив url'ов картинок
     this._imageUrls = currentGame.answers.map((element) => {
       return element.image.url;
