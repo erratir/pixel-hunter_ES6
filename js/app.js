@@ -5,8 +5,27 @@ import {GAME_DATA} from "./data/settings";
 import IntroScreen from "./screens/intro/intro";
 import GreetingScreen from "./screens/greeting/greeting";
 import RulesScreen from "./screens/rules/rules";
+import Loader from "./loader/loader";
+import {adapterServerData} from "./data/data-adapter";
+import {onError} from "./loader/loader-utils";
+
+let gameData;
 
 export default class App {
+
+  // const splash = new SplashScreen();
+  static start() {
+    Loader.loadGameData()
+      .then((data) => {
+        gameData = adapterServerData(data);
+        return data;
+      })
+      .catch((error) => {
+        // в случае ошибки используем моковые данные
+        gameData = [...GAME_DATA];
+        onError(`Ошибка загрузки данных (${error}) с сервера, но мы все равно сыграем =)`);
+      });
+  }
 
   static showIntro() {
     const introScreen = new IntroScreen();
@@ -25,7 +44,7 @@ export default class App {
 
   static showGame(userName) {
     const model = new GameModel(userName);
-    const gameScreen = new GameScreen(model, GAME_DATA);
+    const gameScreen = new GameScreen(model, gameData);
     gameScreen.start();
   }
 
@@ -33,6 +52,4 @@ export default class App {
     const statScreen = new StatScreen(state);
     statScreen.show();
   }
-
-
 }
