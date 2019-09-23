@@ -13,9 +13,10 @@ const AnswerType = {
  */
 const RULES = Object.freeze({
   debug: hash.toLowerCase() === `debug`, // to use debug mode add #debug to url, and see console
+  spinnerRotationTime: 50, // spinner rotation time after the load data from server, in ms (intro screen)
   levels: 10, // количество уровней (вопросов)
   gameTime: 30,
-  tickTime: 1000, // время обновления таймера in ms
+  tickTime: 1000, // время обновления таймера, in ms
   warningTime: 5,
   slowTime: 20, // slow answer time
   quickTime: 10, // fast answer time

@@ -1,7 +1,7 @@
 import StatScreen from "./screens/statistic/statistic";
 import GameModel from "./screens/games/games-model";
 import GameScreen from "./screens/games/game-screen";
-import {GAME_DATA} from "./data/settings";
+import {GAME_DATA, RULES} from "./data/settings";
 import IntroScreen from "./screens/intro/intro";
 import GreetingScreen from "./screens/greeting/greeting";
 import RulesScreen from "./screens/rules/rules";
@@ -13,23 +13,22 @@ let gameData;
 
 export default class App {
 
-  // const splash = new SplashScreen();
-  static start() {
+  static showIntro() {
+    const introScreen = new IntroScreen();
+    introScreen.show();
+
+    // Load data from server and splash screen - spinner
+    const spinnerStop = introScreen.spinnerStart();
     Loader.loadGameData()
       .then((data) => {
         gameData = adapterServerData(data);
         return data;
-      })
+      }).finally(() => setTimeout(spinnerStop, RULES.spinnerRotationTime))
       .catch((error) => {
         // в случае ошибки используем моковые данные
         gameData = [...GAME_DATA];
         onError(`Ошибка загрузки данных (${error}) с сервера, но мы все равно сыграем =)`);
       });
-  }
-
-  static showIntro() {
-    const introScreen = new IntroScreen();
-    introScreen.show();
   }
 
   static showGreeting() {
