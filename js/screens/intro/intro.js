@@ -10,6 +10,9 @@ export default class IntroScreen {
 
   show() {
     changeView(this.introView.element);
+    // splash screen
+    const spinnerStop = this.introView.spinnerRotate();
+    setTimeout(spinnerStop, 5000);
   }
 
   static _onNextScreen() {
