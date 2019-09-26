@@ -17,7 +17,7 @@ export default class GameScreen {
     this.gameData = data;
     this.headerView = new HeaderView(this.model.state);
     this.gameView = GameScreen.getGameView(this.gameData[this.model.state.currentLevel]);
-    this.statStringView = new StatStringView(this.model.state);
+    this.statStringView = new StatStringView(this.model.state.answers);
     this.footerView = new FooterView();
 
     this.root = document.querySelector(`main.central`);
@@ -110,7 +110,7 @@ export default class GameScreen {
 
   _changeStatString() {
     // смена строки состояния (строка результатов ответов)
-    this.statStringView = new StatStringView(this.model.state);
+    this.statStringView = new StatStringView(this.model.state.answers);
     this.gameNode.appendChild(this.statStringView.element);
   }
 

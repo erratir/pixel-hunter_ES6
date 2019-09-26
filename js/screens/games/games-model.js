@@ -35,8 +35,8 @@ export default class GameModel {
     // JSON.parse(JSON.stringify(INITIAL_STATE)) тоже не сработает, так как в объекте есть метод
     // Поэтому либо написать метод для глубокого копирования, либо обнулить влоб:
     this._state.answers = [];
-    this._state.totalResult.score = 0;
-    this._state.totalResult.success = false;
+    this._state.gameResult.score = 0;
+    this._state.gameResult.success = false;
   }
 
   isDead() {

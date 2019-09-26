@@ -1,4 +1,4 @@
-import StatScreen from "./screens/statistic/statistic";
+import StatScreen from "./screens/statistic/statistic-screen";
 import GameModel from "./screens/games/games-model";
 import GameScreen from "./screens/games/game-screen";
 import {GAME_DATA, RULES} from "./data/settings";
@@ -48,7 +48,22 @@ export default class App {
   }
 
   static showStats(state) {
-    const statScreen = new StatScreen(state);
-    statScreen.show();
+    // в таком виде сохраняем на сервер:
+    // { answers: ['correct', 'wrong', 'fast', ..],  lives: 0 }
+    // в таком виде получаем userResults:
+    // [{"answers":["fast","wrong","fast", ...],"lives":0,"date":1569318288998}, {"answers":[],"lives": 1,"date": ...}]
+    const data = {answers: state.answers, lives: state.lives};
+    const userName = state.userName;
+
+    // сохраняем статистику на сервер
+    Loader.saveResults(data, userName)
+    // загружаем всю статистику по игроку
+      .then(() => Loader.loadResults(userName))
+      .then((userResults) => {
+        const statScreen = new StatScreen(userName, userResults);
+        statScreen.show();
+      })
+      .catch();
   }
+
 }

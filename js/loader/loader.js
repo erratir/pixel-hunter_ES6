@@ -1,8 +1,9 @@
 import {checkResponse, onError, loadData} from './loader-utils';
+import {INITIAL_STATE} from "../data/settings";
 
 const SERVER_URL = `https://es.dump.academy/pixel-hunter`;
 const APP_ID = 322232;
-const DEFAULT_NAME = `unknown_raccoon`;
+const DEFAULT_NAME = INITIAL_STATE.userName;
 
 export default class Loader {
   static loadGameData() {

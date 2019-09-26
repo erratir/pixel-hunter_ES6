@@ -9,20 +9,31 @@ const AnswerType = {
 
 /**
  * object settings rules of the game
- * @type {Readonly<{quickTime: number, gameTime: number, lives: number, answersPoints: {[p: string]: number}, tickTime: number, slowTime: number, liveBonus: number, warningTime: number, levels: number}>}
+ * @type @readonly {Object}
+ * @prop {boolean} debug              - to use debug mode add #debug to url, and see console
+ * @prop {number} spinnerRotationTime - spinner rotation time after the load data from server, in ms (intro screen)
+ * @prop {number} levels              - количество уровней (вопросов)
+ * @prop {number} gameTime            - время отводящееся на ответ в каждой игре
+ * @prop {number} tickTime            - время обновления таймера, in ms
+ * @prop {number} warningTime         - время при котором таймер начинает мигать красным // todo
+ * @prop {number} slowTime            - slow answer time
+ * @prop {number} quickTime           - fast answer time
+ * @prop {number} lives               - Кол-во жизней (кол-во возможных ошибок)
+ * @prop {number} liveBonus           - Бонус за каждую сохраненную жизнь
+ * @prop {Object.<string, number>} answersPoints - Кол-во очков за ответы
  */
 const RULES = Object.freeze({
-  debug: hash.toLowerCase() === `debug`, // to use debug mode add #debug to url, and see console
-  spinnerRotationTime: 50, // spinner rotation time after the load data from server, in ms (intro screen)
-  levels: 10, // количество уровней (вопросов)
+  debug: hash.toLowerCase() === `debug`,
+  spinnerRotationTime: 50,
+  levels: 10,
   gameTime: 30,
-  tickTime: 1000, // время обновления таймера, in ms
+  tickTime: 1000,
   warningTime: 5,
-  slowTime: 20, // slow answer time
-  quickTime: 10, // fast answer time
-  lives: 3, // Кол-во жизней (кол-во возможных ошибок)
-  liveBonus: 50, // Бонус за каждую сохраненную жизнь
-  answersPoints: { // к-во очков за ответы:
+  slowTime: 20,
+  quickTime: 10,
+  lives: 3,
+  liveBonus: 50,
+  answersPoints: {
     [AnswerType.WRONG]: 0, // за неверный ответ
     [AnswerType.CORRECT]: 100, // за верный ответ произведенный за Хсек (quickTime >  Хсек < slowTime)
     [AnswerType.FAST]: 150, // за верный ответ быстрый ответ ( < quickTime сек)
@@ -32,27 +43,21 @@ const RULES = Object.freeze({
 
 /**
  * initial game settings
+ * @type @readonly {Object}
+ * @prop {string} userName              - Имя игрока по умолчанию
+ * @prop {number} lives                 - Кол-во жизней на начало игры
+ * @prop {number} time                  - Кол-во секунд до завершения игры
+ * @prop {number} currentLevel          - Текущий уровень
+ * @prop {array<string>} answers        - Массив ответов пользователя
+ * @prop {Object.<string, any>} gameResult            - Объект с результатами игры
  */
 const INITIAL_STATE = Object.freeze({
   userName: `Неопознанный Енот`,
-  lives: 3,
-  time: 30,
+  lives: RULES.lives,
+  time: RULES.gameTime,
   currentLevel: 0,
   answers: [], // ex.: [`CORRECT`, `CORRECT`, `WRONG`, `FAST`, `SLOW`]
-  /**
-   * Returns count of answers specified type
-   * If answers type not specified, returns total count of answers
-   * @param {string} type  / ex.: `CORRECT`, `WRONG`, `FAST`, `SLOW`
-   * @return {number}
-   */
-  getCountOfAnswers(type) {
-    if (type) {
-      return this.answers.filter((element) => element === type).length;
-    } else {
-      return this.answers.length;
-    }
-  },
-  totalResult: {
+  gameResult: {
     score: 0,
     success: false
   },
