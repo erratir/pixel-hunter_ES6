@@ -11,11 +11,4 @@ const loadData = (url) => {
     .then((response) => response.json());
 };
 
-const onError = (error) => {
-  // console.log(error);
-  // todo errorPopup
-  // const errorPopup = new ErrorView(error).element;
-  // document.body.prepend(errorPopup);
-};
-
-export {checkResponse, loadData, onError};
+export {checkResponse, loadData};

@@ -1,13 +1,13 @@
 import StatScreen from "./screens/statistic/statistic-screen";
 import GameModel from "./screens/games/games-model";
 import GameScreen from "./screens/games/game-screen";
-import {GAME_DATA, RULES} from "./data/settings";
+import {RULES} from "./data/settings";
 import IntroScreen from "./screens/intro/intro";
 import GreetingScreen from "./screens/greeting/greeting";
 import RulesScreen from "./screens/rules/rules";
 import Loader from "./loader/loader";
 import {adapterServerData} from "./data/data-adapter";
-import {onError} from "./loader/loader-utils";
+import ModalErrorController from "./loader/modal-error-controler";
 
 let gameData;
 
@@ -25,9 +25,8 @@ export default class App {
         return data;
       }).finally(() => setTimeout(spinnerStop, RULES.spinnerRotationTime))
       .catch((error) => {
-        // в случае ошибки используем моковые данные
-        gameData = [...GAME_DATA];
-        onError(`Ошибка загрузки данных (${error}) с сервера, но мы все равно сыграем =)`);
+        // gameData = [...GAME_DATA]; // в случае ошибки используем моковые данные и продолжить игру?
+        App.showModalError(`Ошибка загрузки данных  с сервера (${error})`);
       });
   }
 
@@ -48,8 +47,7 @@ export default class App {
   }
 
   static showStats(state) {
-    // в таком виде сохраняем на сервер:
-    // { answers: ['correct', 'wrong', 'fast', ..],  lives: 0 }
+    // в таком виде сохраняем на сервер: { answers: ['correct', 'wrong', 'fast', ..],  lives: 0 }
     // в таком виде получаем userResults:
     // [{"answers":["fast","wrong","fast", ...],"lives":0,"date":1569318288998}, {"answers":[],"lives": 1,"date": ...}]
     const data = {answers: state.answers, lives: state.lives};
@@ -62,8 +60,12 @@ export default class App {
       .then((userResults) => {
         const statScreen = new StatScreen(userName, userResults);
         statScreen.show();
-      })
-      .catch();
+      });
+  }
+
+  static showModalError(error) {
+    const modal = new ModalErrorController(error);
+    modal.render();
   }
 
 }

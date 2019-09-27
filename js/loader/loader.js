@@ -1,4 +1,5 @@
-import {checkResponse, onError, loadData} from './loader-utils';
+import App from "../app";
+import {checkResponse, loadData} from './loader-utils';
 import {INITIAL_STATE} from "../data/settings";
 
 const SERVER_URL = `https://es.dump.academy/pixel-hunter`;
@@ -20,11 +21,11 @@ export default class Loader {
     };
     return fetch(`${SERVER_URL}/stats/${APP_ID}-${name}`, initOptions)
       .then(checkResponse)
-      .catch((error) => onError(`Не удалось сохранить результаты игры на сервер (${error})`));
+      .catch((error) => App.showModalError(`Не удалось сохранить результаты игры на сервер (${error})`));
   }
 
   static loadResults(name = DEFAULT_NAME) {
     return loadData(`${SERVER_URL}/stats/${APP_ID}-${name}`)
-      .catch((error) => onError(`Ошибка загрузки статистики с сервера (${error})`));
+      .catch((error) => App.showModalError(`Ошибка загрузки статистики с сервера (${error})`));
   }
 }
