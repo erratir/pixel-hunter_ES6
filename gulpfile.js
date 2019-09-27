@@ -125,6 +125,7 @@ gulp.task(`test`, () => {
     .pipe(mocha({
       require: [
         `babel-core/register`,
+        `jsdom-global/register` // npm i -DE jsdom jsdom-global // mocha -r jsdom-global/register
       ],
       reporter: `spec` // Вид в котором я хочу отображать результаты тестирования - варианты: 'list', json` и т.д - https://github.com/mochajs/mocha/tree/master/lib/reporters
     }));
