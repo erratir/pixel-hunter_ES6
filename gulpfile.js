@@ -14,7 +14,8 @@ const rollup = require(`gulp-better-rollup`);
 const sourcemaps = require(`gulp-sourcemaps`);
 const mocha = require(`gulp-mocha`); // Добавим установленный gulp-mocha плагин
 const babel = require(`rollup-plugin-babel`); // Добавим  в сборщик зависимостей Rollup плагин транспайлера babel
-// const commonjs = require(`rollup-plugin-commonjs`); // Добавим плагин для работы с `commonjs` модулями
+const noderesolve = require(`rollup-plugin-node-resolve`); // Позволяет загружать сторонние модули из node_modules в проект
+const commonjs = require(`rollup-plugin-commonjs`); // Обеспечивает поддержку подключения CommonJS-модулей
 
 gulp.task(`style`, () => {
   return gulp.src(`sass/style.scss`).
@@ -56,6 +57,11 @@ gulp.task(`scripts`, () => {
     // где в массив plugins будет записан вызов babel с нужными параметрами
     .pipe(rollup({
       plugins: [
+        // resolve node_modules
+        noderesolve({browser: true}),
+        // resolve commonjs imports
+        commonjs(),
+        // use babel to transpile into ES5
         babel({
           babelrc: false,
           exclude: `node_modules/**`,
