@@ -13,6 +13,7 @@ const svgstore = require(`gulp-svgstore`);
 const rollup = require(`gulp-better-rollup`);
 const sourcemaps = require(`gulp-sourcemaps`);
 const mocha = require(`gulp-mocha`); // Добавим установленный gulp-mocha плагин
+const babel = require(`rollup-plugin-babel`); // Добавим  в сборщик зависимостей Rollup плагин транспайлера babel
 // const commonjs = require(`rollup-plugin-commonjs`); // Добавим плагин для работы с `commonjs` модулями
 
 gulp.task(`style`, () => {
@@ -49,11 +50,21 @@ gulp.task(`sprite`, () => {
 
 gulp.task(`scripts`, () => {
   return gulp.src(`js/main.js`)
-   .pipe(plumber())
-   .pipe(sourcemaps.init())
-   .pipe(rollup({}, `iife`))
-   .pipe(sourcemaps.write(``))
-   .pipe(gulp.dest(`build/js`));
+    .pipe(plumber())
+    .pipe(sourcemaps.init())
+    // Чтобы Rollup.js при сборке использовал Babel: В вызов метода rollup передаем объект с настройками,
+    // где в массив plugins будет записан вызов babel с нужными параметрами
+    .pipe(rollup({
+      plugins: [
+        babel({
+          babelrc: false,
+          exclude: `node_modules/**`,
+          presets: [`@babel/env`]
+        })
+      ]
+    }, `iife`))
+    .pipe(sourcemaps.write(``))
+    .pipe(gulp.dest(`build/js`));
 });
 
 gulp.task(`clean`, () => {
