@@ -19,26 +19,26 @@ const commonjs = require(`rollup-plugin-commonjs`); // Обеспечивает 
 const uglify = require(`gulp-uglify`);
 
 gulp.task(`style`, () => {
-  return gulp.src(`sass/style.scss`).
-  pipe(plumber()).
-  pipe(sass()).
-  pipe(postcss([
-    autoprefixer({
-      browsers: [
-        `last 1 version`,
-        `last 2 Chrome versions`,
-        `last 2 Firefox versions`,
-        `last 2 Opera versions`,
-        `last 2 Edge versions`
-      ]
-    }),
-    mqpacker({sort: true})
-  ])).
-  pipe(gulp.dest(`build/css`)).
-  pipe(server.stream()).
-  pipe(minify()).
-  pipe(rename(`style.min.css`)).
-  pipe(gulp.dest(`build/css`));
+  return gulp.src(`sass/style.scss`)
+    .pipe(plumber())
+    .pipe(sass())
+    .pipe(postcss([
+      autoprefixer({
+        browsers: [
+          `last 1 version`,
+          `last 2 Chrome versions`,
+          `last 2 Firefox versions`,
+          `last 2 Opera versions`,
+          `last 2 Edge versions`
+        ]
+      }),
+      mqpacker({sort: true})
+    ]))
+    .pipe(gulp.dest(`build/css`))
+    .pipe(server.stream())
+    .pipe(minify())
+    .pipe(rename(`style.min.css`))
+    .pipe(gulp.dest(`build/css`));
 });
 
 gulp.task(`sprite`, () => {
@@ -80,28 +80,28 @@ gulp.task(`clean`, () => {
 });
 
 gulp.task(`copy-html`, () => {
-  return gulp.src(`*.{html,ico}`).
-  pipe(gulp.dest(`build`)).
-  pipe(server.stream());
+  return gulp.src(`*.{html,ico}`)
+    .pipe(gulp.dest(`build`))
+    .pipe(server.stream());
 });
 
 gulp.task(`copy`, gulp.parallel(`copy-html`, `scripts`, `style`, `sprite`, () => {
   return gulp.src([
     `fonts/**/*.{woff,woff2}`,
     `img/*.*`
-  ], {base: `.`}).
-  pipe(gulp.dest(`build`));
+  ], {base: `.`})
+    .pipe(gulp.dest(`build`));
 }));
 
 gulp.task(`assemble`, gulp.series(`clean`, `copy`)); // `style` ???
 
 gulp.task(`imagemin`, gulp.series(`copy`, () => {
-  return gulp.src(`build/img/**/*.{jpg,png,gif}`).
-  pipe(imagemin([
-    imagemin.optipng({optimizationLevel: 3}),
-    imagemin.jpegtran({progressive: true})
-  ])).
-  pipe(gulp.dest(`build/img`));
+  return gulp.src(`build/img/**/*.{jpg,png,gif}`)
+    .pipe(imagemin([
+      imagemin.optipng({optimizationLevel: 3}),
+      imagemin.jpegtran({progressive: true})
+    ]))
+    .pipe(gulp.dest(`build/img`));
 }));
 
 gulp.task(`js-watch`, gulp.series(`scripts`, (done) => {
@@ -124,19 +124,6 @@ gulp.task(`serve`, gulp.series(`assemble`, () => {
 }));
 
 gulp.task(`build`, gulp.series(`assemble`, `imagemin`));
-
-// gulp.task(`test`, () => {
-//   return gulp
-//     .src([`js/**/*.test.js`])
-//     .pipe(rollup({
-//       plugins: [
-//         commonjs() // Сообщает Rollup, что модули можно загружать из node_modules
-//       ]}, `cjs`)) // Выходной формат тестов — `CommonJS` модуль
-//     .pipe(gulp.dest(`build/test`))
-//     .pipe(mocha({
-//       reporter: `spec` // Вид в котором я хочу отображать результаты тестирования
-//     }));
-// });
 
 gulp.task(`test`, () => {
   return gulp
