@@ -8,6 +8,7 @@ import RulesScreen from "./screens/rules/rules";
 import Loader from "./loader/loader";
 import {adapterServerData} from "./data/data-adapter";
 import ModalErrorController from "./loader/modal-error-controler";
+import {preloadImages} from "./loader/loader-utils";
 
 let gameData;
 
@@ -22,8 +23,10 @@ export default class App {
     Loader.loadGameData()
       .then((data) => {
         gameData = adapterServerData(data);
-        return data;
-      }).finally(() => setTimeout(spinnerStop, RULES.spinnerRotationTime))
+        return gameData;
+      }).then((data) => preloadImages(data))
+      // .then(() => console.log(gameData))
+      .finally(() => setTimeout(spinnerStop, RULES.spinnerRotationTime))
       .catch((error) => {
         // gameData = [...GAME_DATA]; // в случае ошибки используем моковые данные и продолжить игру?
         App.showModalError(`Ошибка загрузки данных  с сервера (${error})`);

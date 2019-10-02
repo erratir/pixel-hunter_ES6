@@ -8,9 +8,9 @@ export default class extends AbstractView {
     this._currentGameData = currentGame;
     this._gameQuestion = currentGame.question;
     this.correctAnswer = this._gameQuestion.includes(`Найдите фото среди изображений`) ? `photo` : `painting`;
-    // создадим массив url'ов картинок
-    this._imageUrls = currentGame.answers.map((element) => {
-      return element.image.url;
+    // создадим массив картинок текущей игры
+    this._images = currentGame.answers.map((element) => {
+      return element.image;
     });
   }
 
@@ -21,13 +21,13 @@ export default class extends AbstractView {
         <p class="game__task">${this._gameQuestion}</p>
         <form class="game__content  game__content--triple">
             <div class="game__option">
-                <img src="${this._imageUrls[0]}" alt="Option 1" width="304" height="455">
+                <img src="${this._images[0].url}" alt="Option 1" width=${this._images[0].width} height=${this._images[0].height}>
             </div>
             <div class="game__option  game__option--selected">
-                <img src="${this._imageUrls[1]}" alt="Option 2" width="304" height="455">
+                <img src="${this._images[1].url}" alt="Option 2" width=${this._images[1].width} height=${this._images[1].height}>
             </div>
             <div class="game__option">
-                <img src="${this._imageUrls[2]}" alt="Option 3" width="304" height="455">
+                <img src="${this._images[2].url}" alt="Option 3" width=${this._images[2].width} height=${this._images[2].height}>
             </div>
         </form>
       </section>`;

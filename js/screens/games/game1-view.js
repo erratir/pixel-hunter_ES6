@@ -7,15 +7,15 @@ export default class extends AbstractView {
     super();
     this._currentGameData = currentGame;
     this._gameQuestion = currentGame.question;
-    // создадим массив url'ов картинок
-    this._imageUrls = currentGame.answers.map((element) => {
-      return element.image.url;
+    // создадим массив картинок текущей игры
+    this._images = currentGame.answers.map((element) => {
+      return element.image;
     });
   }
 
   get template() {
-    this._templateString = this._imageUrls.map((item, i) => {
-      return `<div class="game__option"><img src="${item}" alt="Option ${++i}" width="705" height="455">
+    this._templateString = this._images.map((item, i) => {
+      return `<div class="game__option"><img src="${item.url}" alt="Option ${++i}" width=${item.width} height=${item.height}>
               <label class="game__answer game__answer--photo">
                 <input class="visually-hidden" name="question${i}" type="radio" value="photo">
                 <span>Фото</span>
