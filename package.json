@@ -34,7 +34,7 @@
     "gulp-sourcemaps": "2.6.5",
     "gulp-svgstore": "6.1.1",
     "gulp-uglify": "3.0.2",
-    "jsdom": "15.1.1",
+    "jsdom": "16.5.0",
     "jsdom-global": "3.0.2",
     "rollup": "1.12.5",
     "rollup-plugin-babel": "4.3.3",
